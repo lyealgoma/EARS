@@ -1,18 +1,23 @@
-## Getting Started
+## Development
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+Replace the username and password with yours
 
-## Folder Structure
+### schema migration
 
-The workspace contains two folders by default, where:
+```
+mysql --user="root" --password="12345678" ears < schema.sql
+```
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+### database seeding
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+```
+mysql --user="root" --password="12345678" ears < seed.sql
+```
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+### db reset
 
-## Dependency Management
+in case you want to clean up data for development
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+```
+mysql --user="root" --password="12345678" ears < reset.sql
+```

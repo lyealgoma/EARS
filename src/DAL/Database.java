@@ -1,31 +1,50 @@
 package DAL;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
 // Database access layer
 public class Database {
-  public static final String HOST = "10.14.0.10";
-  public static final String DB = "project";
-  public static final String USER = "dev";
-  public static final String PASS = "ProjectDev#2020";
+  public static final String HOST = "localhost:3306/";
+  public static final String DB = "ears";
+  public static final String USER = "root";
+  public static final String PASS = "12345678";
+  private static HikariDataSource dataSource = null;
 
-  public static Connection connect(String host, String user, String pass, String db) {
-    Connection conn = null;
+  static {
     try {
       Class.forName("com.mysql.cj.jdbc.Driver");
-      String url = "jdbc:mysql://" + host + ":3306/" + db;
-      conn = DriverManager.getConnection(url, user, pass);
-    } catch (ClassNotFoundException ex) {
+      HikariConfig config = new HikariConfig();
+      config.setJdbcUrl("jdbc:mysql://" + HOST + DB);
+      config.setUsername(USER);
+      config.setPassword(PASS);
+      config.addDataSourceProperty("minimumIdle", "5");
+      config.addDataSourceProperty("maximumPoolSize", "25");
 
-      System.out.println("Could Not Load MySQL Driver");
-    } catch (SQLException ex) {
-      ex.printStackTrace();
-      System.out.println("Could Not Connect to MySQL Server");
+      dataSource = new HikariDataSource(config);
+      Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+        if (dataSource != null) {
+          dataSource.close();
+        }
+      }));
+    } catch (Exception e) {
+      e.printStackTrace();
     }
 
-    return conn;
+  }
+
+  public static Connection getConnection() {
+    Connection connection = null;
+    try {
+      connection = dataSource.getConnection();
+    } catch (SQLException ex) {
+      ex.printStackTrace();
+      System.out.println("Cannot connect to db server");
+    }
+
+    return connection;
   }
 
 }

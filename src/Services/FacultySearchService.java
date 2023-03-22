@@ -7,7 +7,7 @@ import java.sql.*;;
 
 public class FacultySearchService {
   // pool
-  private Connection connection = Database.connect(null, null, null, null);
+  private Connection connection = Database.connect();
 
   public ArrayList<FacultySearchEntity> listAllFacultySearch(Integer userId) {
     ArrayList<FacultySearchEntity> list = new ArrayList<>();

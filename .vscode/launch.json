@@ -2,17 +2,24 @@
   "configurations": [
     {
       "type": "java",
+      "name": "LoginView",
+      "request": "launch",
+      "mainClass": "Views.LoginView",
+      "projectName": "EARS_821022b3"
+    },
+    {
+      "type": "java",
       "name": "Launch Current File",
       "request": "launch",
       "mainClass": "${file}",
-      "vmArgs": "--module-path \"${workspaceFolder}/lib\" --add-modules javafx.controls,javafx.fxml"
+      "vmArgs": "--module-path \"${workspaceFolder}/lib\" --add-modules javafx.controls,javafx.fxml,org.slf4j,com.zaxxer.hikari"
     },
     {
       "type": "java",
       "name": "Launch Java Program",
       "request": "launch",
       "mainClass": "App",
-      "vmArgs": "--module-path \"${workspaceFolder}/lib\" --add-modules javafx.controls,javafx.fxml"
+      "vmArgs": "--module-path \"${workspaceFolder}/lib\" --add-modules javafx.controls,javafx.fxml,org.slf4j,com.zaxxer.hikari"
     }
   ]
 }

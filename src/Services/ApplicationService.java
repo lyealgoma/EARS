@@ -5,7 +5,7 @@ import DAL.Database;
 import java.sql.*;
 
 public class ApplicationService {
-  private Connection connection = Database.connect(null, null, null, null);
+  private Connection connection = Database.connect();
 
   public ApplicationEntity acceptApplication(Integer applicationId) {
     // send noty to applicants

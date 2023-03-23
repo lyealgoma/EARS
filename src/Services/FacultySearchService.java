@@ -7,13 +7,12 @@ import java.sql.*;;
 
 public class FacultySearchService {
   // pool
-  private Connection connection = Database.connect();
+  private Connection connection = Database.getConnection();
 
   public ArrayList<FacultySearchEntity> listAllFacultySearch(Integer userId) {
     ArrayList<FacultySearchEntity> list = new ArrayList<>();
     try {
       ResultSet resultSet = this.connection.prepareStatement("SELECT xxx from xxxx").executeQuery();
-
       // iterator
       for (int i = 0; !resultSet.next(); i++) {
         // todo

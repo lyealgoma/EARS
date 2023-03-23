@@ -1,80 +1,107 @@
 package Views;
 
+import Controllers.UserController;
 import javafx.application.Application;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
-
-import Controllers.*;
-import Entities.*;
-
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
-/** @todo: make sure to re-write this */
 public class LoginView extends Application {
-  private Label status;
-
-  // This class is the main entry point
-  public static void main(String[] args) {
-    launch(args);
-  }
 
   @Override
-  public void start(Stage ps) {
-    // Set up the pane geometry
+  public void start(Stage primaryStage) {
+    // enter pasword, email
+    // sent to the controller
+    // we verify the password, email
+    // if good then we allow them to enter the dash
+    // if not return error
     GridPane pane = new GridPane();
-    pane.setPadding(new Insets(20));
-    pane.setVgap(10);
-    pane.setHgap(10);
+    pane.setAlignment(Pos.CENTER);
+    pane.setPadding(new Insets(20, 20, 20, 20));
+    pane.setVgap(50);
+    pane.setHgap(50);
 
-    // Set up title label
-    Label title = new Label("Log In to the System");
-    title.setFont(Font.font(16));
-    pane.add(title, 0, 0, 2, 1);
-    GridPane.setHalignment(title, HPos.CENTER);
+    Label label = new Label("Login- EARS");
+    label.setFont(Font.font(null, FontWeight.BOLD, 60));
+    label.setTextFill(Color.web("0574B2"));
+    pane.add(label, 0, 0, 2, 1);
+    GridPane.setHalignment(label, HPos.CENTER);
 
-    // Set up status label
-    status = new Label();
-    pane.add(status, 0, 1, 2, 1);
-    GridPane.setHalignment(status, HPos.CENTER);
+    Label label1 = new Label("User ID");
+    label1.setFont(Font.font(null, FontWeight.BOLD, 30));
+    pane.add(label1, 0, 2);
+    TextField userNameField = new TextField();
+    pane.add(userNameField, 1, 2);
 
-    // Create and add the username field
-    pane.add(new Label("Enter UserID: "), 0, 2);
-    TextField user = new TextField();
-    pane.add(user, 1, 2);
+    Label label2 = new Label("Password");
+    label2.setFont(Font.font(null, FontWeight.BOLD, 30));
+    pane.add(label2, 0, 3);
+    PasswordField passwordField = new PasswordField();
+    pane.add(passwordField, 1, 3);
 
-    // Create and add the password field
-    pane.add(new Label("Enter Password: "), 0, 3);
-    PasswordField pass = new PasswordField();
-    pane.add(pass, 1, 3);
+    Button login = new Button("Login");
+    login.setStyle("-fx-background-color: #0574B2");
+    login.setTextFill(Color.WHITE);
 
-    // Add the buttons
-    Button login = new Button("Log On");
-    Button exit = new Button("Exit");
-    login.setMaxWidth(Double.MAX_VALUE);
-    exit.setMaxWidth(Double.MAX_VALUE);
-    GridPane.setHalignment(login, HPos.CENTER);
-    GridPane.setHalignment(exit, HPos.CENTER);
-    pane.add(exit, 0, 5);
-    pane.add(login, 1, 5);
+    Button cancel = new Button("Cancel");
+    cancel.setStyle("-fx-background-color: #B6BBBE");
+    cancel.setTextFill(Color.WHITE);
 
-    // Log in button function
+    pane.add(login, 1, 4);
+    pane.add(cancel, 1, 4);
+    GridPane.setHalignment(login, HPos.LEFT);
+    GridPane.setHalignment(cancel, HPos.CENTER);
+
+    Label label3 = new Label("Don’t have an account? Contact IT Department.");
+    label3.setFont(Font.font(20));
+    label3.setTextFill(Color.web("0574B2"));
+    pane.add(label3, 0, 6, 2, 1);
+    GridPane.setHalignment(label3, HPos.CENTER);
+
+    Label label5 = new Label("Algoma University");
+    label5.setFont(Font.font(20));
+    label5.setTextFill(Color.BLACK);
+    pane.add(label5, 0, 8, 2, 1);
+    GridPane.setHalignment(label5, HPos.CENTER);
+
+    // event when user click login
     login.setOnAction(e -> {
+      String email = userNameField.getText();
+      String password = passwordField.getText();
+
+      // sent to the user controller
+      Boolean isAuthenticated = UserController.authenticate(email, password);
+      if (isAuthenticated) {
+        // also need to check the user role to direct to different page
+        // redirect user to dashboard
+        System.out.println("yea, password correct");
+      } else {
+        // something wrong
+        // inform the user
+      }
+    });
+
+    cancel.setOnAction(e -> {
 
     });
 
-    // Set up the Scene and Stage
-    ps.setScene(new Scene(pane));
-    ps.setTitle("Please Log On");
-    ps.show();
-    ps.requestFocus();
+    Scene scene = new Scene(pane, 1280, 720);
+    primaryStage.setScene(scene);
+    primaryStage.setTitle("Employment Application Review System");
+    primaryStage.show();
+  }
+
+  public static void main(String[] args) {
+    launch(args);
   }
 }

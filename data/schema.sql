@@ -16,6 +16,12 @@ CREATE TABLE
         `firstName` varchar(50) NOT NULL,
         `lastName` varchar(50) NOT NULL,
         `departmentId` int(11) NOT NULL,
+        `role` ENUM('admin', 'regular') NOT NULL,
+        `status` ENUM(
+            'pending',
+            'active',
+            'inactive'
+        ) NOT NULL,
         `createdAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         `updatedAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         PRIMARY KEY (`id`),

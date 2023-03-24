@@ -2,6 +2,20 @@
   "configurations": [
     {
       "type": "java",
+      "name": "ApplicationProcessView",
+      "request": "launch",
+      "mainClass": "Views.ApplicationProcessView",
+      "projectName": "EARS_95effe9"
+    },
+    {
+      "type": "java",
+      "name": "LoginView",
+      "request": "launch",
+      "mainClass": "Views.LoginView",
+      "projectName": "EARS_95effe9"
+    },
+    {
+      "type": "java",
       "name": "LoginView",
       "request": "launch",
       "mainClass": "Views.LoginView",

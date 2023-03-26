@@ -4,12 +4,13 @@ public class ApplicationEntity {
 
   enum Status {
     reject,
-    accept
+    accept,
+    pending
   }
 
   private Integer id;
   
-  private String status;
+  private Status status;
 
   private String firstName, lastName, phone, email, address, city, province, position, department, experience1, experience2, education1, education2;
 
@@ -22,11 +23,11 @@ public class ApplicationEntity {
   }
 
   public String getStatus() {
-    return status;
+    return status.name();
   }
 
   public void setStatus(String status) {
-    this.status = status;
+    this.status = Status.valueOf(status);
   }
 
   public String getFirstName() {return firstName;}

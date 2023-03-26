@@ -8,7 +8,7 @@ public class ApplicationService {
   private Connection connection = Database.getConnection();
 
     /**
-   * Mapper function to convert the user db data to our user entity class
+   * Mapper function to convert the applications db data to our application entity class
    */
   public static ApplicationEntity toEntity(ResultSet resultSet) {
     ApplicationEntity applicationEntity = new ApplicationEntity();
@@ -73,10 +73,14 @@ public class ApplicationService {
     // send noty to applicants
     // send noty to head of department
     // ....
+    String sql = "";
+    Statement statement = null;
     ApplicationEntity applicationEntity = new ApplicationEntity();
     try {
-      ResultSet updatedResult = connection
-          .prepareStatement("update applications set status = 'accept' where id = " + applicationId).executeQuery();
+      sql = "update applications set status = 'accept' where id ="+ applicationId;
+      statement = Database.getConnection().createStatement();
+      statement.execute(sql);
+      // ResultSet updatedResult = Database.getConnection().createStatement().executeQuery(sql);
       // @todo: convert the java sql object to our entity class
     } catch (SQLException exception) {
       exception.printStackTrace();
@@ -88,10 +92,13 @@ public class ApplicationService {
     // send noty to applicants
     // send noty to head of department
     // ....
+    String sql = "";
+    Statement statement = null;
     ApplicationEntity applicationEntity = new ApplicationEntity();
     try {
-      ResultSet updatedResult = connection
-          .prepareStatement("update applications set status = 'reject' where id = " + applicationId).executeQuery();
+      sql = "update applications set status = 'reject' where id ="+ applicationId;
+      statement = Database.getConnection().createStatement();
+      statement.execute(sql);
       // @todo: convert the java sql object to our entity class
     } catch (SQLException exception) {
       exception.printStackTrace();

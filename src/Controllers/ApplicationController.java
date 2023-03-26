@@ -5,7 +5,7 @@ import Services.*;
 
 public class ApplicationController {
   public ApplicationEntity getApplication(Integer applicationId) {
-    // call the accept application service
+    // call the get application service
     ApplicationService applicationService = new ApplicationService();
     ApplicationEntity gettedApplication = applicationService.getApplicationById(applicationId);
     return gettedApplication;

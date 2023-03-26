@@ -84,6 +84,24 @@ public class ApplicationProcessView extends Application {
     stage.show();
     // Close the app when the stage is closed
     stage.setOnCloseRequest(e -> {System.exit(0);});
+
+    
+    // Fill data into TextFields
+    fNameTextField.setText(String.valueOf(application.getFirstName()));
+    lNameTextField.setText(String.valueOf(application.getLastName()));
+    phoneTextField.setText(String.valueOf(application.getPhone()));
+    emailTextField.setText(String.valueOf(application.getEmail()));
+    addressTextField.setText(String.valueOf(application.getAddress()));
+    cityTextField.setText(String.valueOf(application.getCity()));
+    provinceTextField.setText(String.valueOf(application.getProvince()));
+    positionTextField.setText(String.valueOf(application.getPosition()));
+    departmentTextField.setText(String.valueOf(application.getDepartment()));
+    statusTextField.setText(String.valueOf(application.getStatus()));
+    experience1TextArea.setText(String.valueOf(application.getExperience1()));
+    experience2TextArea.setText(String.valueOf(application.getExperience2()));
+    education1TextArea.setText(String.valueOf(application.getEducation1()));
+    education2TextArea.setText(String.valueOf(application.getEducation2()));
+    applicationIDTextField.setText(String.valueOf(application.getId()));
     
   } // End of start method
 

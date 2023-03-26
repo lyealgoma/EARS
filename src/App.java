@@ -10,6 +10,7 @@ public class App extends Application {
         // initialize database connection pool
         new Database();
         launch(args);
+
     }
 
     @Override

@@ -10,9 +10,9 @@
         "name": "Launch Mac Java Program",
         "request": "launch",
         "mainClass": "App",
-        "vmArgs": "--module-path \"${workspaceFolder}/MacOS\" --add-modules javafx.controls,javafx.fxml,org.slf4j,com.zaxxer.hikari"
+        "vmArgs": "--module-path \"${workspaceFolder}/lib/MacOS\" --add-modules javafx.controls,javafx.fxml,org.slf4j,com.zaxxer.hikari"
       },
-      "vmArgs": "--module-path \"${workspaceFolder}/lib/Windows\" --add-modules javafx.controls,javafx.fxml,org.slf4j,com.zaxxer.hikari"
+      "vmArgs": "--module-path \"${workspaceFolder}/lib/Windows/lib\" --add-modules javafx.controls,javafx.fxml,org.slf4j,com.zaxxer.hikari"
     },
     {
       "type": "java",

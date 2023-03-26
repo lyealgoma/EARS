@@ -2,38 +2,31 @@
   "configurations": [
     {
       "type": "java",
-      "name": "ApplicationProcessView",
-      "request": "launch",
-      "mainClass": "Views.ApplicationProcessView",
-      "projectName": "EARS_95effe9"
-    },
-    {
-      "type": "java",
-      "name": "LoginView",
-      "request": "launch",
-      "mainClass": "Views.LoginView",
-      "projectName": "EARS_95effe9"
-    },
-    {
-      "type": "java",
-      "name": "LoginView",
-      "request": "launch",
-      "mainClass": "Views.LoginView",
-      "projectName": "EARS_821022b3"
-    },
-    {
-      "type": "java",
       "name": "Launch Current File",
       "request": "launch",
       "mainClass": "${file}",
-      "vmArgs": "--module-path \"${workspaceFolder}/lib\" --add-modules javafx.controls,javafx.fxml,org.slf4j,com.zaxxer.hikari"
+      "osx": {
+        "type": "java",
+        "name": "Launch Mac Java Program",
+        "request": "launch",
+        "mainClass": "App",
+        "vmArgs": "--module-path \"${workspaceFolder}/MacOS\" --add-modules javafx.controls,javafx.fxml,org.slf4j,com.zaxxer.hikari"
+      },
+      "vmArgs": "--module-path \"${workspaceFolder}/lib/Windows\" --add-modules javafx.controls,javafx.fxml,org.slf4j,com.zaxxer.hikari"
     },
     {
       "type": "java",
       "name": "Launch Java Program",
       "request": "launch",
       "mainClass": "App",
-      "vmArgs": "--module-path \"${workspaceFolder}/lib\" --add-modules javafx.controls,javafx.fxml,org.slf4j,com.zaxxer.hikari"
+      "osx": {
+        "type": "java",
+        "name": "Launch Mac Java Program",
+        "request": "launch",
+        "mainClass": "App",
+        "vmArgs": "--module-path \"${workspaceFolder}/lib/MacOS\" --add-modules javafx.controls,javafx.fxml,org.slf4j,com.zaxxer.hikari"
+      },
+      "vmArgs": "--module-path \"${workspaceFolder}/lib/Windows/lib\" --add-modules javafx.controls,javafx.fxml,org.slf4j,com.zaxxer.hikari"
     }
   ]
 }

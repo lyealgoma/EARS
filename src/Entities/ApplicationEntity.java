@@ -12,7 +12,7 @@ public class ApplicationEntity {
   
   private Status status;
 
-  private String firstName, lastName, phone, email, address, city, province, position, department, experience1, experience2, education1, education2;
+  private String firstName, lastName, phone, email, address, city, province, position, department, experience1, experience2, education1, education2, content;
 
   public Integer getId() {
     return id;
@@ -81,4 +81,8 @@ public class ApplicationEntity {
   public String getEducation2() {return education2;}
 
   public void setEducation2(String education2) {this.education2 = education2;}
+
+  public String getContent() {return content;}
+
+  public void setContent(String content) {this.content = content;}
 }

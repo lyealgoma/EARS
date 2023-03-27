@@ -28,6 +28,7 @@ public class ApplicationService {
       applicationEntity.setExperience2(resultSet.getString("experience2"));
       applicationEntity.setEducation1(resultSet.getString("education1"));
       applicationEntity.setEducation2(resultSet.getString("education2"));
+      applicationEntity.setContent(resultSet.getString("content"));
     } catch (SQLException sqlException) {
       // @todo: handle if a col is not selected from the query
     }
@@ -38,20 +39,22 @@ public class ApplicationService {
     String sql = "";
     ApplicationEntity applicationEntity = null;
     try {
-      sql = "select id,status,JSON_UNQUOTE(json_extract(applicantProfile,'$.firstName')) as firstName," +
-                      "JSON_UNQUOTE(json_extract(applicantProfile,'$.lastName')) as lastName," +
-                      "JSON_UNQUOTE(json_extract(applicantProfile,'$.phone')) as phone," +
-                      "JSON_UNQUOTE(json_extract(applicantProfile,'$.email')) as email," +
-                      "JSON_UNQUOTE(json_extract(applicantProfile,'$.address')) as address," +
-                      "JSON_UNQUOTE(json_extract(applicantProfile,'$.city')) as city," +
-                      "JSON_UNQUOTE(json_extract(applicantProfile,'$.province')) as province," +
-                      "JSON_UNQUOTE(json_extract(applicantProfile,'$.position')) as position," +
-                      "JSON_UNQUOTE(json_extract(applicantProfile,'$.department')) as department," +
-                      "JSON_UNQUOTE(json_extract(applicantProfile,'$.experience1')) as experience1," +
-                      "JSON_UNQUOTE(json_extract(applicantProfile,'$.experience2')) as experience2," +
-                      "JSON_UNQUOTE(json_extract(applicantProfile,'$.education1')) as education1," +
-                      "JSON_UNQUOTE(json_extract(applicantProfile,'$.education2')) as education2 " +
-              "from applications where id=" + id;
+      sql = "select t1.id,t1.status,JSON_UNQUOTE(json_extract(t1.applicantProfile,'$.firstName')) as firstName," +
+                      "JSON_UNQUOTE(json_extract(t1.applicantProfile,'$.lastName')) as lastName," +
+                      "JSON_UNQUOTE(json_extract(t1.applicantProfile,'$.phone')) as phone," +
+                      "JSON_UNQUOTE(json_extract(t1.applicantProfile,'$.email')) as email," +
+                      "JSON_UNQUOTE(json_extract(t1.applicantProfile,'$.address')) as address," +
+                      "JSON_UNQUOTE(json_extract(t1.applicantProfile,'$.city')) as city," +
+                      "JSON_UNQUOTE(json_extract(t1.applicantProfile,'$.province')) as province," +
+                      "JSON_UNQUOTE(json_extract(t1.applicantProfile,'$.position')) as position," +
+                      "JSON_UNQUOTE(json_extract(t1.applicantProfile,'$.department')) as department," +
+                      "JSON_UNQUOTE(json_extract(t1.applicantProfile,'$.experience1')) as experience1," +
+                      "JSON_UNQUOTE(json_extract(t1.applicantProfile,'$.experience2')) as experience2," +
+                      "JSON_UNQUOTE(json_extract(t1.applicantProfile,'$.education1')) as education1," +
+                      "JSON_UNQUOTE(json_extract(t1.applicantProfile,'$.education2')) as education2, " +
+                      "t2.content " +
+              "from applications t1 left join comments t2 " + 
+              "on (t1.id = t2.applicationId) and (t1.id=" + id +")";
       ResultSet resultSet = Database.getConnection().createStatement().executeQuery(sql);
 
       // in programming, iterator => mem pointer
@@ -67,7 +70,7 @@ public class ApplicationService {
       e.printStackTrace();
     }
     return applicationEntity;
-  }
+  } // End of getApplicationById method
 
   public ApplicationEntity acceptApplication(Integer applicationId) {
     // send noty to applicants
@@ -105,5 +108,64 @@ public class ApplicationService {
     }
     return applicationEntity;
   } // End of rejectApplication method
+
+  // Method of updating comment
+  public ApplicationEntity updateComment(Integer applicationId, String comment) {
+    String sql = "";
+    Statement statement = null;
+    ApplicationEntity applicationEntity = new ApplicationEntity();
+    try {
+      sql = "update comments set content = '" + comment + "' where applicationId ="+ applicationId;
+      statement = Database.getConnection().createStatement();
+      statement.execute(sql);
+      // ResultSet updatedResult = Database.getConnection().createStatement().executeQuery(sql);
+      // @todo: convert the java sql object to our entity class
+    } catch (SQLException exception) {
+      exception.printStackTrace();
+    }
+    return applicationEntity;
+  } // End of updateComment method
+
+  // Method of saving new comment
+  public ApplicationEntity saveComment(Integer applicationId, String comment, Integer userId) {
+    String sql = "";
+    Statement statement = null;
+    ApplicationEntity applicationEntity = new ApplicationEntity();
+    try {
+      sql = "INSERT INTO comments (" +
+            "  `applicationId`," +
+            "  `content`," +
+            "  `createdAt`," +
+            "  `updatedAt`," +
+            "  `author`	" +
+            ")" +
+            "VALUES (" + applicationId + ",'" + comment + "', DEFAULT, DEFAULT, " + userId + ")";
+            ;
+      statement = Database.getConnection().createStatement();
+      statement.execute(sql);
+      // ResultSet updatedResult = Database.getConnection().createStatement().executeQuery(sql);
+      // @todo: convert the java sql object to our entity class
+    } catch (SQLException exception) {
+      exception.printStackTrace();
+    }
+    return applicationEntity;
+  } // End of saveComment method
+
+    // Method of deleting current comment
+    public ApplicationEntity deleteComment(Integer applicationId) {
+      String sql = "";
+      Statement statement = null;
+      ApplicationEntity applicationEntity = new ApplicationEntity();
+      try {
+        sql = "delete from comments where applicationId =" + applicationId;
+        statement = Database.getConnection().createStatement();
+        statement.execute(sql);
+        // ResultSet updatedResult = Database.getConnection().createStatement().executeQuery(sql);
+        // @todo: convert the java sql object to our entity class
+      } catch (SQLException exception) {
+        exception.printStackTrace();
+      }
+      return applicationEntity;
+    } // End of saveComment method
 
 }

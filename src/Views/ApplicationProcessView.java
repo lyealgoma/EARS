@@ -43,6 +43,8 @@ public class ApplicationProcessView extends Application {
   protected TextArea experience2TextArea = new TextArea();
   protected TextArea education1TextArea = new TextArea();
   protected TextArea education2TextArea = new TextArea();
+
+  protected TextArea commentTextArea = new TextArea();
   protected Button btnComment = new Button("Comment");
   protected Button btnAccept = new Button("Accept");
   protected Button btnIgnore = new Button("Ignore");
@@ -50,6 +52,8 @@ public class ApplicationProcessView extends Application {
   protected Button btnUpdateComment = new Button("Update");
   protected Button btnDeleteComment = new Button("Delete");
   protected Button btnIgnoreComment = new Button("Ignore");  
+
+  private Integer usrId;
   
   @Override
   public void start(Stage stage) throws Exception {
@@ -343,6 +347,9 @@ public class ApplicationProcessView extends Application {
         Scene secondScene = new Scene(secondPane, 500, 400);
         commentStage.setScene(secondScene);
         commentStage.show();
+
+        // get comment of the loading application
+        loadComment();
     });
 
     btnAccept.setOnAction(e->{
@@ -389,7 +396,6 @@ public class ApplicationProcessView extends Application {
     vbox1.setSpacing(20);
 
     Label testLabel = new Label("Write down your comments here: ");
-    TextArea commentTextArea = new TextArea();
     commentTextArea.setPrefWidth(400);
 
     // Add single row pane inside the VBox pane
@@ -408,6 +414,24 @@ public class ApplicationProcessView extends Application {
 
     // Set actions for buttons
     btnUpdateComment.setOnAction(e->{
+        //Saving or Updating comment for the application
+        //String commentArea = String.valueOf(commentTextArea.getText().trim());
+        // call controller
+        ApplicationEntity application = applicationController.getApplication(id);
+        String commentArea = commentTextArea.getText();
+        if (application.getContent() == null) {
+
+          System.out.println("is empty");
+          ApplicationEntity savedApplication = applicationController.saveComment(id, commentArea, usrId);
+          savedApplication.setContent(commentArea);
+        } else {
+          System.out.println("is not empty");
+          ApplicationEntity updatedApplication = applicationController.updateComment(id, commentArea);
+          updatedApplication.setContent(commentArea);
+        }
+        loadComment();  // Reload the latest comment
+
+        // notice
         Alert msgbox = new Alert(AlertType.INFORMATION);
         msgbox.setTitle("Save the comment");
         msgbox.setHeaderText(null);
@@ -415,11 +439,30 @@ public class ApplicationProcessView extends Application {
         msgbox.showAndWait();
     });
     btnDeleteComment.setOnAction(e->{
-        Alert msgbox = new Alert(AlertType.INFORMATION);
-        msgbox.setTitle("Delete the comment");
-        msgbox.setHeaderText(null);
-        msgbox.setContentText("Your comment is deleted!");
-        msgbox.showAndWait();
+        //Deleting comment for the application
+        // call controller
+        ApplicationEntity application = applicationController.getApplication(id);
+        String commentArea = commentTextArea.getText();
+        if (application.getContent() == null) {
+
+          System.out.println("is empty");
+          Alert msgbox = new Alert(AlertType.INFORMATION);
+          msgbox.setTitle("Delete the comment");
+          msgbox.setHeaderText(null);
+          msgbox.setContentText("There is no comment can be delete!");
+          msgbox.showAndWait();
+        } else {
+          System.out.println("is not empty");
+          ApplicationEntity deletedApplication = applicationController.deleteComment(id);
+          deletedApplication.setContent(commentArea);
+
+          Alert msgbox = new Alert(AlertType.INFORMATION);
+          msgbox.setTitle("Delete the comment");
+          msgbox.setHeaderText(null);
+          msgbox.setContentText("Your comment is deleted!");
+          msgbox.showAndWait();
+        }
+        loadComment();  // Reload the latest comment
     });
     btnIgnoreComment.setOnAction(e->{
         final Stage currentStage = (Stage) btnIgnoreComment.getScene().getWindow();
@@ -450,7 +493,23 @@ public class ApplicationProcessView extends Application {
     education1TextArea.setText(String.valueOf(application.getEducation1()));
     education2TextArea.setText(String.valueOf(application.getEducation2()));
     applicationIDTextField.setText(String.valueOf(application.getId()));
+
+    //appId = application.getId();
+    usrId = 1;  // need to modify in the end
   } // End of Loading data method
+
+  // Load comment into UI
+  public void loadComment() {
+    // call controller
+    ApplicationEntity application = applicationController.getApplication(id);
+    //Fill comment
+    if (application.getContent() == null) {
+      commentTextArea.setText("");
+    } else {
+      commentTextArea.setText(String.valueOf(application.getContent()));
+    }
+  } // End of Loading comment method
+
 
   private Node addSomething() {
     return null;

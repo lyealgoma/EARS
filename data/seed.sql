@@ -20,37 +20,82 @@ VALUES (
         1
     );
 
-INSERT INTO 
+INSERT INTO
     facultySearches (
         `id`,
         `title`,
         `startDate`,
         `endDate`,
         `status`
-    ) 
-    VALUES (
+    )
+VALUES (
         1,
-        'member',
+        'Software Engineering Faculty Search',
         '2023-01-25 12:44:01',
         '2023-03-25 12:44:01',
         'active'
     );
 
-INSERT INTO 
+INSERT INTO
+    facultySearches (
+        `id`,
+        `title`,
+        `startDate`,
+        `endDate`,
+        `status`
+    )
+VALUES (
+        2,
+        'Math Professor Search',
+        '2023-01-25 12:44:01',
+        '2023-03-25 12:44:01',
+        'active'
+    );
+
+INSERT INTO
+    facultySearches (
+        `id`,
+        `title`,
+        `startDate`,
+        `endDate`,
+        `status`
+    )
+VALUES (
+        3,
+        'Part time Computer Science Professor',
+        '2023-01-25 12:44:01',
+        '2023-03-25 12:44:01',
+        'active'
+    );
+
+INSERT INTO
     members (
         `id`,
         `role`,
         `userId`,
         `facultySearchId`
-    ) 
-    VALUES (
-        1,
-        'member',
-        1,
-        1
-    );
+    )
+VALUES (1, 'member', 1, 1);
 
- INSERT INTO 
+INSERT INTO
+    members (
+        `id`,
+        `role`,
+        `userId`,
+        `facultySearchId`
+    )
+VALUES (2, 'member', 1, 2);
+
+INSERT INTO
+    members (
+        `id`,
+        `role`,
+        `userId`,
+        `facultySearchId`
+    )
+VALUES (3, 'member', 1, 3);
+
+INSERT INTO
     applications (
         `id`,
         `applicantProfile`,
@@ -59,8 +104,8 @@ INSERT INTO
         `submitDate`,
         `assignTo`,
         `facultySearchId`
-    ) 
-    VALUES (
+    )
+VALUES (
         1,
         '{
             "firstName":"Alex", 
@@ -82,4 +127,4 @@ INSERT INTO
         null,
         null,
         1
-    );   
+    );

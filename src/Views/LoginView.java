@@ -85,7 +85,7 @@ public class LoginView extends Application {
         // also need to check the user role to direct to different page
         // redirect user to dashboard
         new DashboardView().start(new Stage());
-     
+
         System.out.println("yea, password correct");
       } else {
         // something wrong

@@ -2,6 +2,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "LoginView",
+      "request": "launch",
+      "mainClass": "Views.LoginView",
+      "projectName": "EARS_72d77dd6"
+    },
+    {
+      "type": "java",
       "name": "Launch Current File",
       "request": "launch",
       "mainClass": "${file}",

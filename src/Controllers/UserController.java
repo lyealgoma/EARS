@@ -18,15 +18,24 @@ public class UserController {
   }
 
   public static String fname(String email) {
-    UserEntity userEntity = UserService.getUserByEmail1(email);
+    UserEntity userEntity = UserService.getUserByEmail(email);
     //just verifying
-    //System.out.println(userEntity.getFirstName()); 
+    System.out.println(userEntity.getFirstName()); 
     return userEntity.getFirstName();
   }
 
 public static String lname(String email) {
-  UserEntity userEntity = UserService.getUserByEmail2(email);
+  UserEntity userEntity = UserService.getUserByEmail(email);
     return userEntity.getLastName();
+}
+
+public static String role(String email) {
+  UserEntity userEntity = UserService.getUserByEmail(email);
+    return userEntity.getRole();
+}
+public static String pass(String email) {
+  UserEntity userEntity = UserService.getUserByEmail(email);
+  return userEntity.getPassword();
 }
 
 

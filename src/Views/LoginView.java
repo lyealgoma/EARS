@@ -22,6 +22,8 @@ public class LoginView extends Application {
   public static String Dashboardemail;
   public static String fname1;
   public static String lname1;
+  public static String pass1;
+  public static String role1;
 
 
 @Override
@@ -86,30 +88,30 @@ public class LoginView extends Application {
       String password = passwordField.getText();
 
       // sent to the user controller
-     // String fname = UserController.fname(email);
-      //String lname = UserController.lname(email);
-      //fname1 = fname;
-      //lname1 = lname;
+      
       Boolean isAuthenticated = UserController.authenticate(email, password);
       if (isAuthenticated == true) {
         // also need to check the user role to direct to different page
         // redirect user to dashboard
         
         Dashboardemail = email;
-       
+        String fname = UserController.fname(email);
+        String lname = UserController.lname(email);
+        String pass = UserController.pass(email);
+        String role = UserController.role(email);
+      
+        fname1 = fname;
+        lname1 = lname;
+        pass1 = pass;
+        role1 = role;
       
         new DashboardView().start(new Stage());
-
-       
-        
-        
-     
-        
       } 
 
       if (isAuthenticated == false){
         System.out.println("username/password incorrect");
       }
+
     });
 
     cancel.setOnAction(e -> {

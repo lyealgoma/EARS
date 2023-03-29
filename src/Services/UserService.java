@@ -18,6 +18,7 @@ public class UserService {
       userEntity.setPassword(resultSet.getString("password"));
       userEntity.setFirstName(resultSet.getString("firstName"));
       userEntity.setLastName(resultSet.getString("lastName"));
+      userEntity.setRole(resultSet.getString("role"));
     } catch (SQLException sqlException) {
       // @todo: handle if a col is not selected from the query
     }
@@ -50,7 +51,7 @@ public class UserService {
     try {
       Connection connection = Database.getConnection();
       ResultSet resultSet = connection
-          .prepareStatement("SELECT email, password FROM users WHERE email ='" + email + "'")
+          .prepareStatement("SELECT email, password , firstName , lastName , role FROM users WHERE email ='" + email + "'")
           .executeQuery();
 
       if (resultSet.next()) {
@@ -66,47 +67,6 @@ public class UserService {
 
   }
 
-  public static UserEntity getUserByEmail1(String email) {
-    UserEntity userEntity = null;
-    try {
-      Connection connection = Database.getConnection();
-      ResultSet resultSet = connection
-          .prepareStatement("SELECT firstName FROM users WHERE email ='" + email + "'")
-          .executeQuery();
-
-      if (resultSet.next()) {
-        // convert the user db result set to our user entity pass
-        userEntity = UserService.toEntity(resultSet);
-      }
-
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-
-    return userEntity;
-
-  }
-
-  public static UserEntity getUserByEmail2(String email) {
-    UserEntity userEntity = null;
-    try {
-      Connection connection = Database.getConnection();
-      ResultSet resultSet = connection
-          .prepareStatement("SELECT lastName FROM users WHERE email ='" + email + "'")
-          .executeQuery();
-
-      if (resultSet.next()) {
-        // convert the user db result set to our user entity pass
-        userEntity = UserService.toEntity(resultSet);
-      }
-
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-
-    return userEntity;
-
-  }
 
   // public static boolean verify(String email, String password) {
 

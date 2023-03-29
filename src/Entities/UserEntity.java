@@ -4,6 +4,7 @@ public class UserEntity {
   private String email;
   private String firstName;
   private String lastName;
+  private String role;
 
   // @todo: must hashed in bcrypt
   private String password;
@@ -18,6 +19,14 @@ public class UserEntity {
 
   public String getLastName() {
     return lastName;
+  }
+
+  public String getRole(){
+    return role;
+  }
+
+  public String getPassword(){
+    return password;
   }
 
   public void setEmail(String email) {
@@ -36,8 +45,14 @@ public class UserEntity {
     this.password = password;
   }
 
+  public void setRole(String role){
+    this.role = role;
+  }
+
   public boolean comparePassword(String password) {
     return this.password.equals(password);
   }
+
+  
 
 }

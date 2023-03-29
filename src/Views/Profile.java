@@ -97,9 +97,8 @@ public class Profile extends Application {
 
 		pane2.add(pane, 100, 1);
 		GridPane.setHalignment(pane, HPos.CENTER);
-		
-		
-		//action
+
+		// action
 		save.setOnAction(e -> {
 
 		});

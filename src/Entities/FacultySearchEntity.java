@@ -3,15 +3,12 @@ package Entities;
 import java.util.Date;
 
 public class FacultySearchEntity {
-  enum Status {
-    active,
-    inactive
-  }
 
   private Date startDate;
   private Date enDate;
-  private Status Status;
+  private String status;
   private Integer id;
+  private String title;
 
   public Date getEnDate() {
     return enDate;
@@ -37,12 +34,20 @@ public class FacultySearchEntity {
     this.id = id;
   }
 
-  public Status getStatus() {
-    return Status;
+  public String getStatus() {
+    return status;
   }
 
-  public void setStatus(Status status) {
-    Status = status;
+  public void setStatus(String status) {
+    this.status = status;
+  }
+
+  public String getTitle() {
+    return title;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
   }
 
 }

@@ -14,6 +14,21 @@ public class UserController {
     UserEntity userEntity = UserService.getUserByEmail(email);
     // comapre databaseSaved.password === userEnterpassword
     return userEntity.comparePassword(password);
+    
   }
+
+  public static String fname(String email) {
+    UserEntity userEntity = UserService.getUserByEmail1(email);
+    //just verifying
+    //System.out.println(userEntity.getFirstName()); 
+    return userEntity.getFirstName();
+  }
+
+public static String lname(String email) {
+  UserEntity userEntity = UserService.getUserByEmail2(email);
+    return userEntity.getLastName();
+}
+
+
 
 }

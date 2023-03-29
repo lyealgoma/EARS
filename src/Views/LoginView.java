@@ -1,5 +1,6 @@
 package Views;
 
+import Controllers.DashboardController;
 import Controllers.UserController;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -18,7 +19,12 @@ import javafx.scene.text.FontWeight;
 
 public class LoginView extends Application {
 
-  @Override
+  public static String Dashboardemail;
+  public static String fname1;
+  public static String lname1;
+
+
+@Override
   public void start(Stage primaryStage) {
     // enter pasword, email
     // sent to the controller
@@ -80,21 +86,34 @@ public class LoginView extends Application {
       String password = passwordField.getText();
 
       // sent to the user controller
+     // String fname = UserController.fname(email);
+      //String lname = UserController.lname(email);
+      //fname1 = fname;
+      //lname1 = lname;
       Boolean isAuthenticated = UserController.authenticate(email, password);
-      if (isAuthenticated) {
+      if (isAuthenticated == true) {
         // also need to check the user role to direct to different page
         // redirect user to dashboard
+        
+        Dashboardemail = email;
+       
+      
         new DashboardView().start(new Stage());
+
+       
+        
+        
      
-        System.out.println("yea, password correct");
-      } else {
-        // something wrong
-        // inform the user
+        
+      } 
+
+      if (isAuthenticated == false){
+        System.out.println("username/password incorrect");
       }
     });
 
     cancel.setOnAction(e -> {
-
+      new LoginView().start(new Stage());
     });
 
     Scene scene = new Scene(pane, 1280, 720);
@@ -102,6 +121,8 @@ public class LoginView extends Application {
     primaryStage.setTitle("Employment Application Review System");
     primaryStage.show();
   }
+
+  
 
   public static void main(String[] args) {
     launch(args);

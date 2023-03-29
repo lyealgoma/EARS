@@ -5,6 +5,7 @@ import Entities.*;
 import DAL.Database;
 import java.sql.*;;
 
+
 public class FacultySearchService {
   // pool
   private Connection connection = Database.getConnection();

@@ -46,47 +46,58 @@ public class Profile extends Application {
 
 		Label label = new Label("First Name");
 		pane.add(label, 1, 1);
-		pane.add(new TextField(), 1, 2);
+		TextField firstName = new TextField();
+		pane.add(firstName, 1, 2);
 
 		Label label1 = new Label("Last Name");
 		pane.add(label1, 2, 1);
-		pane.add(new TextField(), 2, 2);
+		TextField lastName = new TextField();
+		pane.add(lastName, 2, 2);
 
 		Label label2 = new Label("Email");
 		pane.add(label2, 1, 4);
-		pane.add(new TextField(), 1, 5, 2, 1);
+		TextField email = new TextField();
+		pane.add(email, 1, 5, 2, 1);
 
 		Label label3 = new Label("Contact Number");
 		pane.add(label3, 1, 7);
-		pane.add(new TextField(), 1, 8, 2, 1);
+		TextField contact = new TextField();
+		pane.add(contact, 1, 8, 2, 1);
 
 		Label label4 = new Label("Address");
 		pane.add(label4, 1, 10);
-		pane.add(new TextField(), 1, 11, 2, 1);
+		TextField Address = new TextField();
+		pane.add(Address, 1, 11, 2, 1);
 
 		Label label5 = new Label("City");
 		pane.add(label5, 1, 13);
-		pane.add(new TextField(), 1, 14);
-
+		TextField city = new TextField();
+		pane.add(city, 1, 14);
+		
 		Label label6 = new Label("Province");
 		pane.add(label6, 2, 13);
-		pane.add(new TextField(), 2, 14);
+		TextField province = new TextField();
+		pane.add(province, 2, 14);
 
 		Label label7 = new Label("Zip Code");
 		pane.add(label7, 1, 16);
-		pane.add(new TextField(), 1, 17);
+		TextField zip = new TextField();
+		pane.add(zip, 1, 17);
 
 		Label label8 = new Label("Country");
 		pane.add(label8, 2, 16);
-		pane.add(new TextField(), 2, 17);
+		TextField country = new TextField();
+		pane.add(country, 2, 17);
 
 		Label label9 = new Label("Password");
 		pane.add(label9, 1, 19);
-		pane.add(new PasswordField(), 1, 20);
+		PasswordField password = new PasswordField();
+		pane.add(password, 1, 20);
 
 		Label label10 = new Label("Role");
 		pane.add(label10, 2, 19);
-		pane.add(new TextField(), 2, 20);
+		TextField role = new TextField();
+		pane.add(role, 2, 20);
 
 		Button save = new Button("   Save   ");
 		save.setFont(Font.font(17));

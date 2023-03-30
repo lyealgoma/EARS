@@ -1,5 +1,6 @@
 package Entities;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class FacultySearchEntity {
@@ -7,18 +8,31 @@ public class FacultySearchEntity {
     active,
     inactive
   }
-
+  String title;
   private Date startDate;
-  private Date enDate;
+  private Date endDate;
   private Status Status;
   private Integer id;
 
-  public Date getEnDate() {
-    return enDate;
+public FacultySearchEntity(String title){
+  this.title = title;
+}
+
+public  FacultySearchEntity( String title, Date startDate, Date endDate){
+  this.title = title;
+  this.startDate = startDate;
+  this.endDate = endDate;
+}
+
+  public String gettitle() {
+    return title;
+  }
+  public Date getEndDate() {
+    return endDate;
   }
 
   public void setEnDate(Date enDate) {
-    this.enDate = enDate;
+    this.endDate = enDate;
   }
 
   public Date getStartDate() {

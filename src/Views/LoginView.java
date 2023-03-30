@@ -1,5 +1,7 @@
 package Views;
 
+import java.sql.SQLException;
+
 import Controllers.UserController;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -84,10 +86,15 @@ public class LoginView extends Application {
       if (isAuthenticated) {
         // also need to check the user role to direct to different page
         // redirect user to dashboard
+        primaryStage.close();
+        try {
+          new DashboardView().start(new Stage());
+          System.out.println("page changed");
+        } catch (Exception e1) {
+          e1.printStackTrace();
+        }
         System.out.println("yea, password correct");
-      } else {
-        // something wrong
-        // inform the user
+        
       }
     });
 

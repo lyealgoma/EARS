@@ -1,6 +1,5 @@
 package Entities;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 public class FacultySearchEntity {
@@ -11,8 +10,8 @@ public class FacultySearchEntity {
   private Integer id;
   private String title;
 
-  public FacultySearchEntity(String title) {
-    this.title = title;
+  public FacultySearchEntity() {
+
   }
 
   public FacultySearchEntity(String title, Date startDate, Date endDate) {

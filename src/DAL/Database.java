@@ -17,7 +17,7 @@ public class Database {
   public static final String HOST = "localhost:3306/";
   public static final String DB = "ears";
   public static final String USER = "root";
-  public static final String PASS = "password";
+  public static final String PASS = "12345678";
   private static HikariDataSource dataSource = null;
 
   static {
@@ -54,7 +54,5 @@ public class Database {
 
     return connection;
   }
-
-
 
 }

@@ -1,9 +1,16 @@
 package Controllers;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 import Entities.*;
 import Services.UserService;
 
 public class UserController {
+
+  public static ArrayList<UserEntity> getAllUsers() throws ClassNotFoundException, SQLException {
+    return UserService.getAllUsers();
+  }
 
   public static UserEntity getUserById(Integer id) {
     return UserService.getUserById(id);

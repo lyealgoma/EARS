@@ -8,6 +8,19 @@ public class UserEntity {
 
   // @todo: must hashed in bcrypt
   private String password;
+  private Integer id;
+
+  public UserEntity() {
+
+  }
+
+  public UserEntity(Integer id, String firstName, String lastName, String email, String role) {
+    this.id = id;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.role = role;
+  }
 
   public String getEmail() {
     return email;
@@ -21,12 +34,16 @@ public class UserEntity {
     return lastName;
   }
 
-  public String getRole(){
+  public String getRole() {
     return role;
   }
 
-  public String getPassword(){
+  public String getPassword() {
     return password;
+  }
+
+  public Integer getID() {
+    return id;
   }
 
   public void setEmail(String email) {
@@ -45,14 +62,12 @@ public class UserEntity {
     this.password = password;
   }
 
-  public void setRole(String role){
+  public void setRole(String role) {
     this.role = role;
   }
 
   public boolean comparePassword(String password) {
     return this.password.equals(password);
   }
-
-  
 
 }

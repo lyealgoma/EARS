@@ -1,6 +1,5 @@
 package Views;
 
-import Controllers.DashboardController;
 import Controllers.UserController;
 import Entities.UserEntity;
 import Services.UserService;
@@ -23,9 +22,7 @@ public class LoginView extends Application {
 
   public static UserEntity userEntity;
 
-
-
-@Override
+  @Override
   public void start(Stage primaryStage) {
     // enter pasword, email
     // sent to the controller
@@ -87,41 +84,39 @@ public class LoginView extends Application {
       String password = passwordField.getText();
 
       // sent to the user controller
-      
+
       Boolean isAuthenticated = UserController.authenticate(email, password);
       if (isAuthenticated == true) {
         // also need to check the user role to direct to different page
         // redirect user to dashboard
-        
 
-        //Dashboardemail = email;
-       // String firstname =
-        //UserController.firstName(email);
-        //String lname = 
-        //UserController.lastName(email);
-        //String pass = 
-        //UserController.Pass(email);
-        //String role = 
-        //UserController.Role(email);
-        //fname1 = fname;
-        //lname1 = lname;
-        //pass1 = pass;
-        //role1 = role;
+        // Dashboardemail = email;
+        // String firstname =
+        // UserController.firstName(email);
+        // String lname =
+        // UserController.lastName(email);
+        // String pass =
+        // UserController.Pass(email);
+        // String role =
+        // UserController.Role(email);
+        // fname1 = fname;
+        // lname1 = lname;
+        // pass1 = pass;
+        // role1 = role;
         userEntity = UserService.getUserByEmail(email);
-        /* 
-        if(userEntity.getRole() == "admin"){
-          new AdminDashboardView().start(new Stage());
-        }
-        else{
-          new DashboardView().start(new Stage());
-        }
-        */
+        /*
+         * if(userEntity.getRole() == "admin"){
+         * new AdminDashboardView().start(new Stage());
+         * }
+         * else{
+         * new DashboardView().start(new Stage());
+         * }
+         */
         new DashboardView().start(new Stage());
 
-          
-      } 
+      }
 
-      if (isAuthenticated == false){
+      if (isAuthenticated == false) {
         System.out.println("username/password incorrect");
       }
 
@@ -136,8 +131,6 @@ public class LoginView extends Application {
     primaryStage.setTitle("Employment Application Review System");
     primaryStage.show();
   }
-
-  
 
   public static void main(String[] args) {
     launch(args);

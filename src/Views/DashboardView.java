@@ -30,7 +30,7 @@ public class DashboardView extends Application {
   public void start(Stage primaryStage) {
     Integer userId = 1;
     ArrayList<FacultySearchEntity> facultySearchesAssignedToUsers = facultySearchController
-        .listAllFacultySearch(userId);
+        .listUserAllFacultySearch(userId);
 
     // render list of faculty searches
    

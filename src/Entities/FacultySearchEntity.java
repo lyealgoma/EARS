@@ -5,17 +5,31 @@ import java.util.Date;
 public class FacultySearchEntity {
 
   private Date startDate;
-  private Date enDate;
+  private Date endDate;
   private String status;
   private Integer id;
   private String title;
 
-  public Date getEnDate() {
-    return enDate;
+  public FacultySearchEntity() {
+
+  }
+
+  public FacultySearchEntity(String title, Date startDate, Date endDate) {
+    this.title = title;
+    this.startDate = startDate;
+    this.endDate = endDate;
+  }
+
+  public String gettitle() {
+    return title;
+  }
+
+  public Date getEndDate() {
+    return endDate;
   }
 
   public void setEnDate(Date enDate) {
-    this.enDate = enDate;
+    this.endDate = enDate;
   }
 
   public Date getStartDate() {

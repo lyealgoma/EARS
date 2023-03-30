@@ -3,6 +3,8 @@ package Services;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 import DAL.Database;
 import Entities.*;
@@ -66,8 +68,21 @@ public class UserService {
 
   }
 
-  // public static boolean verify(String email, String password) {
+  public static ArrayList<UserEntity> getAllUsers() throws SQLException, ClassNotFoundException {
+    String query = "SELECT * FROM users";
+    Statement stmt = Database.getConnection().createStatement();
+    ResultSet rs = stmt.executeQuery(query);
+    ArrayList<UserEntity> userList = new ArrayList<UserEntity>();
+    while (rs.next()) {
+      int id = rs.getInt("id");
+      String firstName = rs.getString("firstName");
+      String lastName = rs.getString("lastName");
+      String email = rs.getString("email");
+      String role = rs.getString("role");
 
-  // }
+      userList.add(new UserEntity(id, firstName, lastName, email, role));
+    }
+    return userList;
+  }
 
 }

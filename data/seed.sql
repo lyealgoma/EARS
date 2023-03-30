@@ -1,6 +1,26 @@
 -- Seed test data
 
+INSERT INTO departments VALUES (2, 'math');
+
 INSERT INTO departments VALUES (1, 'cs');
+
+INSERT INTO
+    users (
+        `id`,
+        `email`,
+        `password`,
+        `firstName`,
+        `lastName`,
+        `departmentId`
+    )
+VALUES (
+        2,
+        'user@algomau.ca',
+        '12345678',
+        'Regular',
+        'Centennial',
+        2
+    );
 
 INSERT INTO
     users (

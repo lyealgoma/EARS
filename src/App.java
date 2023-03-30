@@ -1,4 +1,5 @@
 import DAL.Database;
+import Views.AdminUserDashBoardView;
 import Views.DashboardView;
 import Views.LoginView;
 import javafx.application.Application;
@@ -19,8 +20,9 @@ public class App extends Application {
         // display login view by default, when detect already login, switch to dashboard
         // view
         if (isLogin) {
+
         } else {
-            new LoginView().start(new Stage());
+            new AdminUserDashBoardView().start(new Stage());
         }
     }
 

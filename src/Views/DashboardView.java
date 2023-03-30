@@ -21,7 +21,9 @@ import java.util.ArrayList;
 import Controllers.*;
 import Entities.*;
 
+
 public class DashboardView extends Application {
+
   private FacultySearchController facultySearchController = new FacultySearchController();
 
   @Override
@@ -31,7 +33,7 @@ public class DashboardView extends Application {
         .listUserAllFacultySearch(userId);
 
     // render list of faculty searches
-
+   
     BorderPane pane = new BorderPane();
 
     pane.setPadding(new Insets(50, 100, 100, 200));
@@ -42,7 +44,8 @@ public class DashboardView extends Application {
     Label label1 = new Label("Dashboard");
     label1.setFont(Font.font(40));
 
-    Label label2 = new Label("user: lye@algomau.ca");
+    Label label2 = new Label("");
+    label2.setText("user: " + LoginView.userEntity.getEmail());
     label2.setFont(Font.font(20));
 
     vBox.getChildren().addAll(label1, label2);
@@ -50,9 +53,11 @@ public class DashboardView extends Application {
 
     BorderPane.setAlignment(vBox, Pos.CENTER);
 
-    Label label = new Label("Zhengbin,Xue");
+    Label label = new Label("");
+    label.setText(LoginView.userEntity.getFirstName() + "," + LoginView.userEntity.getLastName() + " ");
+    
     label.setFont(Font.font(20));
-    label.setLayoutX(1068);
+    label.setLayoutX(1050);
     label.setLayoutY(50);
 
     // action

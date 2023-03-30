@@ -13,6 +13,7 @@ import java.sql.SQLException;
 
 import Entities.FacultySearchEntity;
 
+
 public class FacultySearchService {
   // pool
   private Connection connection = Database.getConnection();

@@ -20,6 +20,7 @@ public class UserService {
       userEntity.setPassword(resultSet.getString("password"));
       userEntity.setFirstName(resultSet.getString("firstName"));
       userEntity.setLastName(resultSet.getString("lastName"));
+      userEntity.setRole(resultSet.getString("role"));
     } catch (SQLException sqlException) {
       // @todo: handle if a col is not selected from the query
     }
@@ -52,7 +53,8 @@ public class UserService {
     try {
       Connection connection = Database.getConnection();
       ResultSet resultSet = connection
-          .prepareStatement("SELECT email, password FROM users WHERE email ='" + email + "'")
+          .prepareStatement(
+              "SELECT email, password , firstName , lastName , role FROM users WHERE email ='" + email + "'")
           .executeQuery();
 
       if (resultSet.next()) {

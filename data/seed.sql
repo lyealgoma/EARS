@@ -11,6 +11,7 @@ INSERT INTO
         `password`,
         `firstName`,
         `lastName`,
+        `role`,
         `departmentId`
     )
 VALUES (
@@ -37,6 +38,7 @@ VALUES (
         '12345678',
         'Admin',
         'Algoma',
+        'admin',
         1
     );
 

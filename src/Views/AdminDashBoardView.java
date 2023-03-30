@@ -20,7 +20,6 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import Controllers.*;
 
@@ -144,13 +143,12 @@ public class AdminDashBoardView extends Application {
       cell.setOnMouseClicked(event -> {
         if (!cell.isEmpty()) {
           // Handle the click event
-          FacultySearchEntity selectedItem = cell.getItem();
-          System.out.println("Clicked " + selectedItem.gettitle());
+          FacultySearchEntity selectedFacultySearch = cell.getItem();
+          System.out.println("Clicked " + selectedFacultySearch.gettitle());
           stage.close();
           try {
-
             // Set the root of the current scene to the new view
-            new ViewFacultySearchView().start(new Stage());
+            new ViewFacultySearchView(selectedFacultySearch).start(new Stage());
             System.out.println("page changed");
           } catch (Exception e1) {
             e1.printStackTrace();

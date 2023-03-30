@@ -10,13 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.List;
 
 import Entities.FacultySearchEntity;
-import Entities.MemberEntity;
-import Entities.UserEntity;
-import Views.CreateFacultySearchView;
 
 public class FacultySearchService {
   // pool
@@ -58,7 +53,7 @@ public class FacultySearchService {
     ArrayList<FacultySearchEntity> list = new ArrayList<>();
     try {
       ResultSet resultSet = this.connection.prepareStatement(
-          "SELECT title, startDate, endDate, status FROM facultySearches")
+          "SELECT * FROM facultySearches")
           .executeQuery();
 
       // iterator

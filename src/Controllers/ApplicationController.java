@@ -1,9 +1,18 @@
 package Controllers;
 
+import java.util.ArrayList;
+
 import Entities.ApplicationEntity;
 import Services.*;
 
 public class ApplicationController {
+  ApplicationService applicationService;
+
+  public ApplicationController() {
+    ApplicationService applicationService = new ApplicationService();
+    this.applicationService = applicationService;
+  }
+
   public ApplicationEntity getApplication(Integer applicationId) {
     // call the get application service
     ApplicationService applicationService = new ApplicationService();
@@ -25,17 +34,17 @@ public class ApplicationController {
     return rejectedApplication;
   } // End of rejectApplication method
 
-  public ApplicationEntity saveComment(Integer applicationId,String comment, Integer userId) {
+  public ApplicationEntity saveComment(Integer applicationId, String comment, Integer userId) {
     // call the save application service
     ApplicationService applicationService = new ApplicationService();
-    ApplicationEntity savedComment = applicationService.saveComment(applicationId,comment,userId);
+    ApplicationEntity savedComment = applicationService.saveComment(applicationId, comment, userId);
     return savedComment;
   } // End of saveComment method
 
-  public ApplicationEntity updateComment(Integer applicationId,String comment) {
+  public ApplicationEntity updateComment(Integer applicationId, String comment) {
     // call the update application service
     ApplicationService applicationService = new ApplicationService();
-    ApplicationEntity updatedComment = applicationService.updateComment(applicationId,comment);
+    ApplicationEntity updatedComment = applicationService.updateComment(applicationId, comment);
     return updatedComment;
   } // End of updateComment method
 
@@ -46,4 +55,13 @@ public class ApplicationController {
     return deletedComment;
   } // End of updateComment method
 
+  public ArrayList<ApplicationEntity> listFacultySearchApplications(Integer facultySearchId) {
+    ArrayList<ApplicationEntity> applications = new ArrayList<ApplicationEntity>();
+    try {
+      applications = this.applicationService.listFacultySearchApplications(facultySearchId);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return applications;
+  }
 }

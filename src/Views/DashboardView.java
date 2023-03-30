@@ -97,7 +97,12 @@ public class DashboardView extends Application {
       link.setLayoutX(400);
       link.setLayoutY(225 + i * 50);
       link.setOnAction(e -> {
-
+        try {
+          new ViewFacultySearchView().start(new Stage());
+        } catch (Exception e1) {
+          // TODO Auto-generated catch block
+          e1.printStackTrace();
+        }
       });
       root.getChildren().add(link);
     }

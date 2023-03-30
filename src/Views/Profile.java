@@ -1,5 +1,7 @@
 package Views;
 
+import java.sql.SQLException;
+
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -89,7 +91,15 @@ public class Profile extends Application {
 		
 		//action
 		save.setOnAction(e -> {
-
+			try {
+				new AdminUserDashBoardView().start(new Stage());
+			} catch (ClassNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		});
 
 		Scene scene = new Scene(pane2, 1280, 720);

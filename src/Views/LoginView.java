@@ -1,5 +1,7 @@
 package Views;
 
+import java.sql.SQLException;
+
 import Controllers.UserController;
 import Entities.UserEntity;
 import Services.UserService;
@@ -104,15 +106,23 @@ public class LoginView extends Application {
         // pass1 = pass;
         // role1 = role;
         userEntity = UserService.getUserByEmail(email);
-        /*
-         * if(userEntity.getRole() == "admin"){
-         * new AdminDashboardView().start(new Stage());
-         * }
-         * else{
-         * new DashboardView().start(new Stage());
-         * }
-         */
-        new DashboardView().start(new Stage());
+        
+          if(userEntity.getRole() == "admin"){
+            new DashboardView().start(new Stage());
+          }
+          else{
+          try {
+            new AdminUserDashBoardView().start(new Stage());
+          } catch (ClassNotFoundException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+          } catch (SQLException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+          }
+          }
+         
+        
 
       }
 

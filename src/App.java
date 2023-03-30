@@ -22,7 +22,7 @@ public class App extends Application {
         if (isLogin) {
 
         } else {
-            new AdminUserDashBoardView().start(new Stage());
+            new LoginView().start(new Stage());
         }
     }
 

@@ -16,28 +16,26 @@ public class UserController {
     return userEntity.comparePassword(password);
     
   }
-
-  public static String fname(String email) {
+  /*
+  public static String firstName(String email) {
     UserEntity userEntity = UserService.getUserByEmail(email);
-    //just verifying
-    System.out.println(userEntity.getFirstName()); 
     return userEntity.getFirstName();
   }
 
-public static String lname(String email) {
-  UserEntity userEntity = UserService.getUserByEmail(email);
-    return userEntity.getLastName();
-}
+  public static String lastName(String email) {
+    UserEntity userEntity = UserService.getUserByEmail(email);
+      return userEntity.getLastName();
+  }
 
-public static String role(String email) {
-  UserEntity userEntity = UserService.getUserByEmail(email);
-    return userEntity.getRole();
-}
-public static String pass(String email) {
-  UserEntity userEntity = UserService.getUserByEmail(email);
-  return userEntity.getPassword();
-}
+  public static String Role(String email) {
+    UserEntity userEntity = UserService.getUserByEmail(email);
+      return userEntity.getRole();
+  }
+  public static String Pass(String email) {
+    UserEntity userEntity = UserService.getUserByEmail(email);
+    return userEntity.getPassword();
+  }
 
-
+ */
 
 }

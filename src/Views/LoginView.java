@@ -2,6 +2,8 @@ package Views;
 
 import Controllers.DashboardController;
 import Controllers.UserController;
+import Entities.UserEntity;
+import Services.UserService;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.geometry.HPos;
@@ -19,11 +21,8 @@ import javafx.scene.text.FontWeight;
 
 public class LoginView extends Application {
 
-  public static String Dashboardemail;
-  public static String fname1;
-  public static String lname1;
-  public static String pass1;
-  public static String role1;
+  public static UserEntity userEntity;
+
 
 
 @Override
@@ -94,16 +93,23 @@ public class LoginView extends Application {
         // also need to check the user role to direct to different page
         // redirect user to dashboard
         
-        Dashboardemail = email;
-        String fname = UserController.fname(email);
-        String lname = UserController.lname(email);
-        String pass = UserController.pass(email);
-        String role = UserController.role(email);
+
+        //Dashboardemail = email;
+       // String firstname =
+        //UserController.firstName(email);
+        //String lname = 
+        //UserController.lastName(email);
+        //String pass = 
+        //UserController.Pass(email);
+        //String role = 
+        //UserController.Role(email);
+        userEntity = UserService.getUserByEmail(email);
+        
       
-        fname1 = fname;
-        lname1 = lname;
-        pass1 = pass;
-        role1 = role;
+        //fname1 = fname;
+        //lname1 = lname;
+        //pass1 = pass;
+        //role1 = role;
       
         new DashboardView().start(new Stage());
       } 

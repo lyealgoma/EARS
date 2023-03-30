@@ -1,15 +1,20 @@
 package Views;
 
 import javafx.scene.control.TableColumn;
+
+import java.util.ArrayList;
+
 import Controllers.ApplicationController;
 import Entities.ApplicationEntity;
 import Entities.FacultySearchEntity;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -64,6 +69,11 @@ public class ViewFacultySearchView extends Application {
         "Applicant Name");
     TableColumn<ApplicationEntity, String> submitDateColumn = new TableColumn<ApplicationEntity, String>("Submit Date");
     TableColumn<ApplicationEntity, String> statusColumn = new TableColumn<ApplicationEntity, String>("Status");
+    applicantNameColumn.setCellValueFactory(new PropertyValueFactory<ApplicationEntity, String>("applicantName"));
+
+    submitDateColumn.setCellValueFactory(new PropertyValueFactory<ApplicationEntity, String>("submitDate"));
+
+    statusColumn.setCellValueFactory(new PropertyValueFactory<ApplicationEntity, String>("status"));
 
     table.getColumns().addAll(applicantNameColumn, submitDateColumn, statusColumn);
     table.setPrefSize(600, 370);
@@ -73,9 +83,12 @@ public class ViewFacultySearchView extends Application {
     // create table row with a for loop
     // how to to pass id date from a vew to another
     System.out.println(facultySearch.getId());
-    applicationController.listFacultySearchApplications(facultySearch.getId());
+    ArrayList<ApplicationEntity> applications = applicationController
+        .listFacultySearchApplications(facultySearch.getId());
 
     table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+    table.setItems(FXCollections.observableList(applications));
 
     root.getChildren().add(facultySearchLabel);
     root.getChildren().add(dashboardBtn);

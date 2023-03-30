@@ -103,15 +103,22 @@ public class LoginView extends Application {
         //UserController.Pass(email);
         //String role = 
         //UserController.Role(email);
-        userEntity = UserService.getUserByEmail(email);
-        
-      
         //fname1 = fname;
         //lname1 = lname;
         //pass1 = pass;
         //role1 = role;
-      
+        userEntity = UserService.getUserByEmail(email);
+        /* 
+        if(userEntity.getRole() == "admin"){
+          new AdminDashboardView().start(new Stage());
+        }
+        else{
+          new DashboardView().start(new Stage());
+        }
+        */
         new DashboardView().start(new Stage());
+
+          
       } 
 
       if (isAuthenticated == false){

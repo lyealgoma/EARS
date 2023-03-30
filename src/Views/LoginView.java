@@ -107,10 +107,12 @@ public class LoginView extends Application {
         // role1 = role;
         userEntity = UserService.getUserByEmail(email);
         
-          if(userEntity.getRole() == "admin"){
+          if(userEntity.getRole().equalsIgnoreCase("regular")){
             new DashboardView().start(new Stage());
           }
-          else{
+
+          
+          if(userEntity.getRole().equalsIgnoreCase("admin")){
           try {
             new AdminUserDashBoardView().start(new Stage());
           } catch (ClassNotFoundException e1) {

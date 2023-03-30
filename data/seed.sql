@@ -11,6 +11,7 @@ INSERT INTO
         `password`,
         `firstName`,
         `lastName`,
+        `role`,
         `departmentId`
     )
 VALUES (

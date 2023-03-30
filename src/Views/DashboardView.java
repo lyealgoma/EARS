@@ -91,11 +91,10 @@ public class DashboardView extends Application {
     // then display a hyperlink for each element in the list loop
     for (int i = 0; i < facultySearchesAssignedToUsers.size(); i++) {
       FacultySearchEntity facultySearchEntity = facultySearchesAssignedToUsers.get(i);
-      Hyperlink link = new Hyperlink(facultySearchEntity.getTitle());
 
-      link.setTextFill(Color.web("0574B2"));
-      link.setLayoutX(400);
-      link.setLayoutY(225 + i * 50);
+      
+      Hyperlink link = new Hyperlink(facultySearchEntity.getTitle());
+      
       link.setOnAction(e -> {
         try {
           new ViewFacultySearchView().start(new Stage());
@@ -104,7 +103,15 @@ public class DashboardView extends Application {
           e1.printStackTrace();
         }
       });
+      
+
+      link.setTextFill(Color.web("0574B2"));
+      link.setLayoutX(400);
+      link.setLayoutY(225 + i * 50);
+
+      
       root.getChildren().add(link);
+
     }
 
     root.getChildren().addAll(cameraView, label, label3, pane);

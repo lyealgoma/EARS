@@ -1,6 +1,4 @@
 import DAL.Database;
-import Views.AdminUserDashBoardView;
-import Views.DashboardView;
 import Views.LoginView;
 import javafx.application.Application;
 import javafx.stage.Stage;

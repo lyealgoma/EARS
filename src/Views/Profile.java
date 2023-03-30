@@ -91,6 +91,7 @@ public class Profile extends Application {
 		
 		//action
 		save.setOnAction(e -> {
+			
 			try {
 				new AdminUserDashBoardView().start(new Stage());
 			} catch (ClassNotFoundException e1) {

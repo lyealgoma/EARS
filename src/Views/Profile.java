@@ -2,6 +2,7 @@ package Views;
 
 import java.sql.SQLException;
 
+import Services.UserService;
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -91,6 +92,14 @@ public class Profile extends Application {
 		
 		//action
 		save.setOnAction(e -> {
+
+
+			String firstname = firstName.getText();
+			String lastname = lastName.getText();
+			String Pass = password.getText();
+			String Role = role.getText();
+			String Email = email.getText();
+
 			
 			try {
 				new AdminUserDashBoardView().start(new Stage());

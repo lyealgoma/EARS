@@ -2,6 +2,7 @@ package Views;
 
 import java.sql.SQLException;
 
+import Entities.UserEntity;
 import Services.UserService;
 import javafx.application.Application;
 import javafx.geometry.HPos;
@@ -57,6 +58,7 @@ public class Profile extends Application {
 		Label label1 = new Label("Last Name");
 		pane.add(label1, 2, 5);
 		TextField lastName = new TextField();
+		lastName.setEditable(false);
 		lastName.setText(LoginView.userEntity.getLastName());
 		pane.add(lastName, 2, 6);
 
@@ -99,6 +101,11 @@ public class Profile extends Application {
 			String Pass = password.getText();
 			String Role = role.getText();
 			String Email = email.getText();
+
+			UserService.setUserByEmail(Email,firstname,lastname,Pass,Role);
+
+
+
 
 			
 			try {

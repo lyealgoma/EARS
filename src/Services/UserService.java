@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import DAL.Database;
 import Entities.*;
+import javafx.scene.control.TextField;
 
 public class UserService {
   /**
@@ -55,6 +56,29 @@ public class UserService {
       ResultSet resultSet = connection
           .prepareStatement(
               "SELECT email, password , firstName , lastName , role FROM users WHERE email ='" + email + "'")
+          .executeQuery();
+
+      if (resultSet.next()) {
+        // convert the user db result set to our user entity pass
+        userEntity = UserService.toEntity(resultSet);
+      }
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return userEntity;
+
+  }
+
+  public static UserEntity setUserByEmail(String email, String firstname, String lastname, String pass, String role) {
+    UserEntity userEntity = null;
+    try {
+      Connection connection = Database.getConnection();
+    
+      ResultSet resultSet = connection
+          .prepareStatement(
+              "UPDATE users SET password = '" + pass + "'" , "role = '" + role + "'" , " firstName = '" + firstname + "'" , "lastName = '" + lastname + "'"  + "WHERE email ='" + email + "'")
           .executeQuery();
 
       if (resultSet.next()) {

@@ -94,7 +94,7 @@ public class LoginView extends Application {
           e1.printStackTrace();
         }
         System.out.println("yea, password correct");
-        
+
       }
     });
 

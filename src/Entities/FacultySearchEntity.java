@@ -4,29 +4,27 @@ import java.time.LocalDate;
 import java.util.Date;
 
 public class FacultySearchEntity {
-  enum Status {
-    active,
-    inactive
-  }
-  String title;
+
   private Date startDate;
   private Date endDate;
-  private Status Status;
+  private String status;
   private Integer id;
+  private String title;
 
-public FacultySearchEntity(String title){
-  this.title = title;
-}
+  public FacultySearchEntity(String title) {
+    this.title = title;
+  }
 
-public  FacultySearchEntity( String title, Date startDate, Date endDate){
-  this.title = title;
-  this.startDate = startDate;
-  this.endDate = endDate;
-}
+  public FacultySearchEntity(String title, Date startDate, Date endDate) {
+    this.title = title;
+    this.startDate = startDate;
+    this.endDate = endDate;
+  }
 
   public String gettitle() {
     return title;
   }
+
   public Date getEndDate() {
     return endDate;
   }
@@ -51,12 +49,20 @@ public  FacultySearchEntity( String title, Date startDate, Date endDate){
     this.id = id;
   }
 
-  public Status getStatus() {
-    return Status;
+  public String getStatus() {
+    return status;
   }
 
-  public void setStatus(Status status) {
-    Status = status;
+  public void setStatus(String status) {
+    this.status = status;
+  }
+
+  public String getTitle() {
+    return title;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
   }
 
 }

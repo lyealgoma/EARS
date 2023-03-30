@@ -46,6 +46,7 @@ public class Database {
     Connection connection = null;
     try {
       connection = dataSource.getConnection();
+      System.out.println("Connected to db server");
     } catch (SQLException ex) {
       ex.printStackTrace();
       System.out.println("Cannot connect to db server");

@@ -32,9 +32,8 @@ public class DashboardView extends Application {
 
   @Override
   public void start(Stage primaryStage) {
-    Integer userId = 1;
     ArrayList<FacultySearchEntity> facultySearchesAssignedToUsers = facultySearchController
-        .listUserAllFacultySearch(userId);
+        .listUserAllFacultySearch(UserContext.getUser().getID());
 
     // render list of faculty searches
 
@@ -126,8 +125,7 @@ public class DashboardView extends Application {
      */
 
     ListView<FacultySearchEntity> facultySearchesListView = new ListView<>();
-    ArrayList<FacultySearchEntity> facultySearches = facultySearchController.listAllFacultySearches();
-    ObservableList<FacultySearchEntity> items = FXCollections.observableArrayList(facultySearches);
+    ObservableList<FacultySearchEntity> items = FXCollections.observableArrayList(facultySearchesAssignedToUsers);
 
     facultySearchesListView.setItems(items);
 

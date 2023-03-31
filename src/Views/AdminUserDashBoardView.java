@@ -6,49 +6,27 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.stage.Stage;
-import javafx.util.converter.IntegerStringConverter;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.swing.Action;
-import javax.xml.stream.FactoryConfigurationError;
 import Controllers.*;
 import Entities.*;
-import DAL.*;
 
-import javafx.geometry.HPos;
-import javafx.geometry.Insets;
 import javafx.scene.Cursor;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 
 /** @todo: make sure to re-write this */
 public class AdminUserDashBoardView extends Application {
@@ -252,17 +230,13 @@ public class AdminUserDashBoardView extends Application {
     firstNameColumn.setCellValueFactory(new PropertyValueFactory<UserEntity, String>("firstName"));
     firstNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-
     TableColumn<UserEntity, String> lastNameColumn = new TableColumn<UserEntity, String>("Last Name");
     lastNameColumn.setCellValueFactory(new PropertyValueFactory<UserEntity, String>("lastName"));
     lastNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-
     TableColumn<UserEntity, String> emailColumn = new TableColumn<UserEntity, String>("Email");
     emailColumn.setCellValueFactory(new PropertyValueFactory<UserEntity, String>("email"));
     emailColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-
-
 
     TableColumn<UserEntity, String> blankColumn = new TableColumn<UserEntity, String>("");
 

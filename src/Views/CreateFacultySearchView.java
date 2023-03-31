@@ -112,7 +112,7 @@ public class CreateFacultySearchView extends Application {
 
         // Set the root of the current scene to the new view
         new AdminDashBoardView().start(new Stage());
-        System.out.println("page changed");
+        //System.out.println("page changed");
       } catch (Exception e1) {
         e1.printStackTrace();
       }

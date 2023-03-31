@@ -1,5 +1,8 @@
 package Views;
 
+import java.sql.SQLException;
+
+import Services.UserService;
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -24,6 +27,7 @@ public class Profile extends Application {
 
 		GridPane pane2 = new GridPane();
 		Label title = new Label("XXX's Profile");
+		title.setText(LoginView.userEntity.getFirstName() + "'s Profile");
 		title.setFont(Font.font(null, FontWeight.BOLD, 35));
 		pane2.add(title, 0, 0);
 		GridPane.setHalignment(title, HPos.LEFT);
@@ -45,48 +49,34 @@ public class Profile extends Application {
 		pane.add(pane1, 1, 0, 2, 1);
 
 		Label label = new Label("First Name");
-		pane.add(label, 1, 1);
-		pane.add(new TextField(), 1, 2);
+		pane.add(label, 1, 5);
+		TextField firstName = new TextField();
+		firstName.setText(LoginView.userEntity.getFirstName());
+		pane.add(firstName, 1, 6);
 
 		Label label1 = new Label("Last Name");
-		pane.add(label1, 2, 1);
-		pane.add(new TextField(), 2, 2);
+		pane.add(label1, 2, 5);
+		TextField lastName = new TextField();
+		lastName.setText(LoginView.userEntity.getLastName());
+		pane.add(lastName, 2, 6);
 
 		Label label2 = new Label("Email");
-		pane.add(label2, 1, 4);
-		pane.add(new TextField(), 1, 5, 2, 1);
-
-		Label label3 = new Label("Contact Number");
-		pane.add(label3, 1, 7);
-		pane.add(new TextField(), 1, 8, 2, 1);
-
-		Label label4 = new Label("Address");
-		pane.add(label4, 1, 10);
-		pane.add(new TextField(), 1, 11, 2, 1);
-
-		Label label5 = new Label("City");
-		pane.add(label5, 1, 13);
-		pane.add(new TextField(), 1, 14);
-
-		Label label6 = new Label("Province");
-		pane.add(label6, 2, 13);
-		pane.add(new TextField(), 2, 14);
-
-		Label label7 = new Label("Zip Code");
-		pane.add(label7, 1, 16);
-		pane.add(new TextField(), 1, 17);
-
-		Label label8 = new Label("Country");
-		pane.add(label8, 2, 16);
-		pane.add(new TextField(), 2, 17);
+		pane.add(label2, 1, 10);
+		TextField email = new TextField();
+		email.setText(LoginView.userEntity.getEmail());
+		pane.add(email, 1, 11, 2, 1);
 
 		Label label9 = new Label("Password");
 		pane.add(label9, 1, 19);
-		pane.add(new PasswordField(), 1, 20);
+		PasswordField password = new PasswordField();
+		password.setText(LoginView.userEntity.getPassword());
+		pane.add(password, 1, 20);
 
 		Label label10 = new Label("Role");
 		pane.add(label10, 2, 19);
-		pane.add(new TextField(), 2, 20);
+		TextField role = new TextField();
+		role.setText(LoginView.userEntity.getRole());
+		pane.add(role, 2, 20);
 
 		Button save = new Button("   Save   ");
 		save.setFont(Font.font(17));
@@ -101,6 +91,23 @@ public class Profile extends Application {
 		// action
 		save.setOnAction(e -> {
 
+			String firstname = firstName.getText();
+			String lastname = lastName.getText();
+			String Pass = password.getText();
+			String Role = role.getText();
+			String Email = email.getText();
+
+			UserService.setUserByEmail(Email, firstname, lastname, Pass, Role);
+
+			try {
+				new AdminUserDashBoardView().start(new Stage());
+			} catch (ClassNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		});
 
 		Scene scene = new Scene(pane2, 1280, 720);

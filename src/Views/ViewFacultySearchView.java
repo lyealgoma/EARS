@@ -3,11 +3,17 @@ package Views;
 import javafx.scene.control.TableColumn;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import Controllers.ApplicationController;
+import Controllers.ListApplicationController;
 import Entities.ApplicationEntity;
 import Entities.FacultySearchEntity;
+import Entities.ListApplicationEntity;
+import Services.ApplicationService;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -22,7 +28,7 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 public class ViewFacultySearchView extends Application {
-  private ApplicationController applicationController = new ApplicationController();
+  private ListApplicationController listApplicationController = new ListApplicationController();
   private FacultySearchEntity facultySearch = new FacultySearchEntity();
 
   public ViewFacultySearchView() {
@@ -62,14 +68,22 @@ public class ViewFacultySearchView extends Application {
       }
     });
 
+    // Create table view
     TableView table = new TableView<ApplicationEntity>();
     table.setEditable(false);
 
-    TableColumn<ApplicationEntity, String> applicantNameColumn = new TableColumn<ApplicationEntity, String>(
-        "Applicant Name");
-    TableColumn<ApplicationEntity, LocalDate> submitDateColumn = new TableColumn<ApplicationEntity, LocalDate>(
-        "Submit Date");
-    TableColumn<ApplicationEntity, String> statusColumn = new TableColumn<ApplicationEntity, String>("Status");
+    // table columns
+    TableColumn applicantNameColumn = new TableColumn("Applicant Name");
+    TableColumn submitDateColumn = new TableColumn("Submit Date");
+    TableColumn statusColumn = new TableColumn("Status");
+    // Get values
+    applicantNameColumn.setCellValueFactory(new PropertyValueFactory<>("applicantName"));
+    submitDateColumn.setCellValueFactory(new PropertyValueFactory<>("submitDate"));
+    statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+    // Insert values
+    ObservableList<ListApplicationEntity> apps = FXCollections
+        .observableArrayList(listApplicationController.listFacultySearchApplications(facultySearch.getId()));
+    table.setItems(apps);
 
     applicantNameColumn.setCellValueFactory(new PropertyValueFactory<ApplicationEntity, String>("applicantName"));
     applicantNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -91,8 +105,12 @@ public class ViewFacultySearchView extends Application {
     // create table row with a for loop
     // how to to pass id date from a vew to another
     System.out.println(facultySearch.getId());
-    applicationController.listFacultySearchApplications(facultySearch.getId());
+    // ObservableList<ApplicationEntity> applications = applicationController
+    // .listFacultySearchApplications(1);
+
     table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+    // table.setItems(FXCollections.observableList(applications));
 
     root.getChildren().add(facultySearchLabel);
     root.getChildren().add(dashboardBtn);

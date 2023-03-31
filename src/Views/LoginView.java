@@ -3,6 +3,8 @@ package Views;
 import java.sql.SQLException;
 
 import Controllers.UserController;
+import Entities.UserEntity;
+import Services.UserService;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.geometry.HPos;
@@ -19,6 +21,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 public class LoginView extends Application {
+
+  public static UserEntity userEntity;
 
   @Override
   public void start(Stage primaryStage) {
@@ -82,24 +86,41 @@ public class LoginView extends Application {
       String password = passwordField.getText();
 
       // sent to the user controller
+
       Boolean isAuthenticated = UserController.authenticate(email, password);
-      if (isAuthenticated) {
-        // also need to check the user role to direct to different page
-        // redirect user to dashboard
-        primaryStage.close();
-        try {
-          new DashboardView().start(new Stage());
-          System.out.println("page changed");
-        } catch (Exception e1) {
-          e1.printStackTrace();
-        }
-        System.out.println("yea, password correct");
+      if (isAuthenticated == true) {
+       
+        userEntity = UserService.getUserByEmail(email);
+        
+          if(userEntity.getRole().equalsIgnoreCase("regular")){
+            new DashboardView().start(new Stage());
+          }
+
+          
+          if(userEntity.getRole().equalsIgnoreCase("admin")){
+          try {
+            new AdminUserDashBoardView().start(new Stage());
+          } catch (ClassNotFoundException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+          } catch (SQLException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+          }
+          }
+         
+        
 
       }
+
+      if (isAuthenticated == false) {
+        System.out.println("username/password incorrect");
+      }
+
     });
 
     cancel.setOnAction(e -> {
-
+      new LoginView().start(new Stage());
     });
 
     Scene scene = new Scene(pane, 1280, 720);

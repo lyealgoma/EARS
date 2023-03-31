@@ -10,6 +10,7 @@ import java.util.Date;
 
 import Entities.FacultySearchEntity;
 
+
 public class FacultySearchService {
   // pool
   private Connection connection = Database.getConnection();

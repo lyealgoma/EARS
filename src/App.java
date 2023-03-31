@@ -1,6 +1,4 @@
 import DAL.Database;
-import Views.AdminUserDashBoardView;
-import Views.DashboardView;
 import Views.LoginView;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -22,7 +20,7 @@ public class App extends Application {
         if (isLogin) {
 
         } else {
-            new AdminUserDashBoardView().start(new Stage());
+            new LoginView().start(new Stage());
         }
     }
 

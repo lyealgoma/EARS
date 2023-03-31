@@ -5,8 +5,6 @@ import java.time.LocalDate;
 
 public class ApplicationEntity {
 
- 
-
   private Integer id;
 
   private String status;
@@ -14,22 +12,19 @@ public class ApplicationEntity {
   private String firstName, lastName, phone, email, address, city, province, position, department, experience1,
       experience2, education1, education2, content;
 
-  private LocalDate  assignedDate;
+  private LocalDate assignedDate;
   private Timestamp submitDate;
   private String assignTo;
   private String facultySearchId;
   private String applicantName;
 
-
-
-public String getApplicantName() {
+  public String getApplicantName() {
     return applicantName;
-}
+  }
 
-
-public void setApplicantName(String applicantName) {
+  public void setApplicantName(String applicantName) {
     this.applicantName = applicantName;
-}
+  }
 
   public Integer getId() {
     return id;
@@ -46,6 +41,7 @@ public void setApplicantName(String applicantName) {
   public void setStatus(String status) {
     this.status = status;
   }
+
   public String getFirstName() {
     return firstName;
   }
@@ -159,12 +155,12 @@ public void setApplicantName(String applicantName) {
   }
 
   // Setter for assignedDate
-  public void setAssignedDate(LocalDate  assignedDate) {
+  public void setAssignedDate(LocalDate assignedDate) {
     this.assignedDate = assignedDate;
   }
 
   // Getter for assignedDate
-  public LocalDate  getAssignedDate() {
+  public LocalDate getAssignedDate() {
     return assignedDate;
   }
 

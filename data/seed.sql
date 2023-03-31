@@ -1,8 +1,8 @@
 -- Seed test data
 
-INSERT INTO departments VALUES (2, 'math');
-
 INSERT INTO departments VALUES (1, 'cs');
+
+INSERT INTO departments VALUES (2, 'math');
 
 INSERT INTO
     users (
@@ -11,14 +11,36 @@ INSERT INTO
         `password`,
         `firstName`,
         `lastName`,
+        `role`,
+        `departmentId`
+    )
+VALUES (
+        1,
+        'admin@algomau.ca',
+        '12345678',
+        'Admin',
+        'Algoma',
+        'admin',
+        1
+    );
+
+INSERT INTO
+    users (
+        `id`,
+        `email`,
+        `password`,
+        `firstName`,
+        `lastName`,
+        `role`,
         `departmentId`
     )
 VALUES (
         2,
-        'user@algomau.ca',
+        'user1@algomau.ca',
         '12345678',
-        'Regular',
-        'Centennial',
+        'smit',
+        'shiroya',
+        'regular',
         2
     );
 
@@ -29,14 +51,36 @@ INSERT INTO
         `password`,
         `firstName`,
         `lastName`,
+        `role`,
         `departmentId`
     )
 VALUES (
-        1,
-        'admin@algomau.ca',
+        3,
+        'user2@algomau.ca',
         '12345678',
-        'Admin',
-        'Algoma',
+        'patel',
+        'sarkar',
+        'regular',
+        2
+    );
+
+INSERT INTO
+    users (
+        `id`,
+        `email`,
+        `password`,
+        `firstName`,
+        `lastName`,
+        `role`,
+        `departmentId`
+    )
+VALUES (
+        4,
+        'user3@algomau.ca',
+        '12345678',
+        'nick',
+        'Jones',
+        'regular',
         1
     );
 
@@ -143,8 +187,8 @@ VALUES (
             "education2":"Toronto University, The Master of Computer Science, 1998-1999"
         }',
         'pending',
-        null,
-        null,
+        DEFAULT,
+        DEFAULT,
         null,
         1
     );

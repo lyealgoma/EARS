@@ -178,14 +178,4 @@ public class ApplicationService {
     return applicationEntity;
   } // End of saveComment method
 
-  public ArrayList<ApplicationEntity> listFacultySearchApplications(Integer facultySearchId)
-      throws SQLException {
-    ResultSet resultSet = Database.getConnection()
-        .prepareStatement("SELECT * FROM applications WHERE facultySearchId = " + facultySearchId).executeQuery();
-    ArrayList<ApplicationEntity> applications = new ArrayList<ApplicationEntity>();
-    while (resultSet.next()) {
-      applications.add(ApplicationService.toEntity(resultSet));
-    }
-    return applications;
-  }
 }

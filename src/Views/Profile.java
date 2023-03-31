@@ -100,7 +100,12 @@ public class Profile extends Application {
 			UserService.setUserByEmail(Email, firstname, lastname, Pass, Role);
 
 			try {
-				new AdminUserDashBoardView().start(new Stage());
+				if (UserContext.getUser().isAdmin()) {
+					new AdminUserDashBoardView().start(new Stage());
+				} else {
+					new DashboardView().start(new Stage());
+				}
+
 			} catch (ClassNotFoundException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

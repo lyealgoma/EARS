@@ -112,7 +112,10 @@ public class Profile extends Application {
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
+			} finally {
+				primaryStage.close();
 			}
+
 		});
 
 		Scene scene = new Scene(pane2, 1280, 720);

@@ -55,13 +55,4 @@ public class ApplicationController {
     return deletedComment;
   } // End of updateComment method
 
-  public ArrayList<ApplicationEntity> listFacultySearchApplications(Integer facultySearchId) {
-    ArrayList<ApplicationEntity> applications = new ArrayList<ApplicationEntity>();
-    try {
-      applications = this.applicationService.listFacultySearchApplications(facultySearchId);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return applications;
-  }
 }

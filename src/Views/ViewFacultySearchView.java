@@ -5,10 +5,14 @@ import javafx.scene.control.TableColumn;
 import java.util.ArrayList;
 
 import Controllers.ApplicationController;
+import Controllers.ListApplicationController;
 import Entities.ApplicationEntity;
 import Entities.FacultySearchEntity;
+import Entities.ListApplicationEntity;
+import Services.ApplicationService;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -22,9 +26,8 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 public class ViewFacultySearchView extends Application {
-  private ApplicationController applicationController = new ApplicationController();
+  private ListApplicationController listApplicationController = new ListApplicationController();
   private FacultySearchEntity facultySearch = new FacultySearchEntity();
-  public static Label facultySearchLabel;
 
   public ViewFacultySearchView() {
 
@@ -40,9 +43,7 @@ public class ViewFacultySearchView extends Application {
     Scene scene = new Scene(root, 1280, 720, Color.WHITE);
     Stage stage = new Stage();
 
-    facultySearchLabel = new Label(this.facultySearch.gettitle());
-  
-
+    Label facultySearchLabel = new Label("Faculty Search: Software Engineering Instructor");
     facultySearchLabel.setFont(Font.font(null, FontWeight.BOLD, 26));
     facultySearchLabel.setLayoutX(20);
     facultySearchLabel.setLayoutY(20);
@@ -65,18 +66,21 @@ public class ViewFacultySearchView extends Application {
       }
     });
 
+    // Create table view
     TableView table = new TableView<ApplicationEntity>();
     table.setEditable(false);
 
-    TableColumn<ApplicationEntity, String> applicantNameColumn = new TableColumn<ApplicationEntity, String>(
-        "Applicant Name");
-    TableColumn<ApplicationEntity, String> submitDateColumn = new TableColumn<ApplicationEntity, String>("Submit Date");
-    TableColumn<ApplicationEntity, String> statusColumn = new TableColumn<ApplicationEntity, String>("Status");
-    applicantNameColumn.setCellValueFactory(new PropertyValueFactory<ApplicationEntity, String>("applicantName"));
-
-    submitDateColumn.setCellValueFactory(new PropertyValueFactory<ApplicationEntity, String>("submitDate"));
-
-    statusColumn.setCellValueFactory(new PropertyValueFactory<ApplicationEntity, String>("status"));
+    // table columns
+    TableColumn applicantNameColumn = new TableColumn("Applicant Name");
+    TableColumn submitDateColumn = new TableColumn("Submit Date");
+    TableColumn statusColumn = new TableColumn("Status");
+    // Get values
+    applicantNameColumn.setCellValueFactory(new PropertyValueFactory<>("applicantName"));
+    submitDateColumn.setCellValueFactory(new PropertyValueFactory<>("submitDate"));
+    statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+    // Insert values
+    ObservableList<ListApplicationEntity> apps = FXCollections.observableArrayList(listApplicationController.listFacultySearchApplications(facultySearch.getId()));
+    table.setItems(apps);
 
     table.getColumns().addAll(applicantNameColumn, submitDateColumn, statusColumn);
     table.setPrefSize(600, 370);
@@ -86,12 +90,12 @@ public class ViewFacultySearchView extends Application {
     // create table row with a for loop
     // how to to pass id date from a vew to another
     System.out.println(facultySearch.getId());
-    ArrayList<ApplicationEntity> applications = applicationController
-        .listFacultySearchApplications(facultySearch.getId());
+    //ObservableList<ApplicationEntity> applications = applicationController
+     //   .listFacultySearchApplications(1);
 
     table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-    table.setItems(FXCollections.observableList(applications));
+    //table.setItems(FXCollections.observableList(applications));
 
     root.getChildren().add(facultySearchLabel);
     root.getChildren().add(dashboardBtn);

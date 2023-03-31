@@ -187,8 +187,8 @@ VALUES (
             "education2":"Toronto University, The Master of Computer Science, 1998-1999"
         }',
         'pending',
-        null,
-        null,
+        DEFAULT,
+        DEFAULT,
         null,
         1
     );

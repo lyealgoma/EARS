@@ -38,6 +38,10 @@ public class UserEntity {
     return role;
   }
 
+  public boolean isAdmin() {
+    return role.equals("admin");
+  }
+
   public String getPassword() {
     return password;
   }

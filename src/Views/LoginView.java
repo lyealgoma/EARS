@@ -22,13 +22,14 @@ import javafx.scene.text.FontWeight;
 
 public class LoginView extends Application {
 
-    //*****************************************
+  // *****************************************
   // Do not delete, it's for comment record
   private static String loginEmail;
+
   public static String getLoginEmail() {
     return loginEmail;
   }
-  //*****************************************
+  // *****************************************
 
   public static UserEntity userEntity;
 
@@ -92,23 +93,24 @@ public class LoginView extends Application {
     login.setOnAction(e -> {
       String email = userNameField.getText();
       String password = passwordField.getText();
-    //*****************************************
-     // Do not delete, it's for comment record
+      // *****************************************
+      // Do not delete, it's for comment record
       loginEmail = email;
-    //*****************************************
+      // *****************************************
       // sent to the user controller
 
       Boolean isAuthenticated = UserController.authenticate(email, password);
       if (isAuthenticated == true) {
 
         userEntity = UserService.getUserByEmail(email);
-
+        UserContext.setUser(userEntity);
         if (userEntity.getRole().equalsIgnoreCase("regular")) {
           new DashboardView().start(new Stage());
         }
 
         if (userEntity.getRole().equalsIgnoreCase("admin")) {
           try {
+
             new AdminUserDashBoardView().start(new Stage());
           } catch (ClassNotFoundException e1) {
             // TODO Auto-generated catch block

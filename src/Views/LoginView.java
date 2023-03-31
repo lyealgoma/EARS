@@ -22,6 +22,14 @@ import javafx.scene.text.FontWeight;
 
 public class LoginView extends Application {
 
+    //*****************************************
+  // Do not delete, it's for comment record
+  private static String loginEmail;
+  public static String getLoginEmail() {
+    return loginEmail;
+  }
+  //*****************************************
+
   public static UserEntity userEntity;
 
   @Override
@@ -84,7 +92,10 @@ public class LoginView extends Application {
     login.setOnAction(e -> {
       String email = userNameField.getText();
       String password = passwordField.getText();
-
+    //*****************************************
+     // Do not delete, it's for comment record
+      loginEmail = email;
+    //*****************************************
       // sent to the user controller
 
       Boolean isAuthenticated = UserController.authenticate(email, password);

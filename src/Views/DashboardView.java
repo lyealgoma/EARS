@@ -143,7 +143,6 @@ public class DashboardView extends Application {
         if (!cell.isEmpty()) {
           // Handle the click event
           FacultySearchEntity selectedFacultySearch = cell.getItem();
-          // System.out.println("Clicked " + selectedFacultySearch.gettitle());
           primaryStage.close();
           try {
             // Set the root of the current scene to the new view

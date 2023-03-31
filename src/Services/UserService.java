@@ -1,6 +1,7 @@
 package Services;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -75,16 +76,16 @@ public class UserService {
     UserEntity userEntity = null;
     try {
       Connection connection = Database.getConnection();
+        
+        String query = "UPDATE users SET password=?, role=?, firstName=?, lastName=? WHERE email=?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, pass);
+        statement.setString(2, role);
+        statement.setString(3, firstname);
+        statement.setString(4, lastname);
+        statement.setString(5, email);
+        statement.executeUpdate();
 
-      ResultSet resultSet = connection.prepareStatement(
-          "UPDATE users SET password = '" + pass + "'" + " role = '" + role + "'" + " firstName = '" + firstname + "'" +
-              " lastName = '" + lastname + "'" + " WHERE email ='" + email + "'" + " RETURNING users.*")
-          .executeQuery();
-
-      if (resultSet.next()) {
-        // convert the user db result set to our user entity pass
-        userEntity = UserService.toEntity(resultSet);
-      }
 
     } catch (SQLException e) {
       e.printStackTrace();

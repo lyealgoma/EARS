@@ -57,7 +57,6 @@ public class Profile extends Application {
 		Label label1 = new Label("Last Name");
 		pane.add(label1, 2, 5);
 		TextField lastName = new TextField();
-		lastName.setEditable(false);
 		lastName.setText(LoginView.userEntity.getLastName());
 		pane.add(lastName, 2, 6);
 

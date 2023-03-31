@@ -40,7 +40,9 @@ public class ViewFacultySearchView extends Application {
     Scene scene = new Scene(root, 1280, 720, Color.WHITE);
     Stage stage = new Stage();
 
-    //facultySearchLabel = new Label("Faculty Search: Software Engineering Instructor");
+    facultySearchLabel = new Label(this.facultySearch.gettitle());
+  
+
     facultySearchLabel.setFont(Font.font(null, FontWeight.BOLD, 26));
     facultySearchLabel.setLayoutX(20);
     facultySearchLabel.setLayoutY(20);

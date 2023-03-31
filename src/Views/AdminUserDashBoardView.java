@@ -85,7 +85,7 @@ public class AdminUserDashBoardView extends Application {
     adminlabel.setLayoutX(50);
     adminlabel.setLayoutY(10);
 
-    userBtn = new Button("Zhengbin,Xue");
+    userBtn = new Button(LoginView.userEntity.getFirstName()+", "+LoginView.userEntity.getLastName());
     userBtn.setFont(Font.font(20));
 
     userBtn.setStyle(
@@ -103,18 +103,10 @@ public class AdminUserDashBoardView extends Application {
       userBtn.setStyle(
           "-fx-background-color: null; -fx-background-insets: 0; -fx-text-fill: black; -fx-border-color: transparent;");
     });
+    userBtn.setOnMouseClicked(e -> {
+      new Profile().start(new Stage());
+    });
 
-    /*
-     * userBtn.setOnAction((ActionEvent e) -> {
-     * stage.close();
-     * try {
-     * new DashboardView().start(new Stage());
-     * System.out.println("page changed");
-     * } catch (Exception e1) {
-     * e1.printStackTrace();
-     * }
-     * });
-     */
 
     userBtn.setLayoutX(1022);
     userBtn.setLayoutY(10);
@@ -134,6 +126,28 @@ public class AdminUserDashBoardView extends Application {
 
     addUserBtn = new Button("Add User");
     addUserBtn.setStyle("-fx-background-color: #0147AB; -fx-text-fill: white;");
+
+
+    addUserBtn.setOnMouseEntered(e -> {
+      addUserBtn.setCursor(Cursor.HAND);}
+    );
+
+    addUserBtn.setOnMouseExited(e -> {
+      addUserBtn.setCursor(Cursor.DEFAULT);}
+   );
+    addUserBtn.setOnMouseClicked(e -> {
+      stage.close();
+      try {
+        new AddUserView().start(new Stage());
+      } catch (ClassNotFoundException e1) {
+        // TODO Auto-generated catch block
+        e1.printStackTrace();
+      } catch (SQLException e1) {
+        // TODO Auto-generated catch block
+        e1.printStackTrace();
+      }
+    });
+
     addUserBtn.setPrefWidth(150);
     addUserBtn.setLayoutX(933);
     addUserBtn.setLayoutY(62);

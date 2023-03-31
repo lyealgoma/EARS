@@ -5,6 +5,7 @@ import javafx.scene.control.TableColumn;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+
 import Controllers.ApplicationController;
 import Controllers.ListApplicationController;
 import Entities.ApplicationEntity;
@@ -15,12 +16,16 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -30,6 +35,7 @@ import javafx.stage.Stage;
 public class ViewFacultySearchView extends Application {
   private ListApplicationController listApplicationController = new ListApplicationController();
   private FacultySearchEntity facultySearch = new FacultySearchEntity();
+  public ApplicationController applicationController = new ApplicationController();
 
   public ViewFacultySearchView() {
 
@@ -95,7 +101,12 @@ public class ViewFacultySearchView extends Application {
     statusColumn.setCellValueFactory(new PropertyValueFactory<ApplicationEntity, String>("status"));
     statusColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-    table.getItems().addAll(applicationController.listFacultySearchApplications(facultySearch.getId()));
+
+
+
+
+  
+    table.getItems().addAll(listApplicationController.listFacultySearchApplications(facultySearch.getId()));
 
     table.getColumns().addAll(applicantNameColumn, submitDateColumn, statusColumn);
     table.setPrefSize(600, 370);

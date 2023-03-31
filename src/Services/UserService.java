@@ -75,10 +75,10 @@ public class UserService {
     UserEntity userEntity = null;
     try {
       Connection connection = Database.getConnection();
-    
-      ResultSet resultSet = connection
-          .prepareStatement(
-              "UPDATE users SET password = '" + pass + "'" , "role = '" + role + "'" , " firstName = '" + firstname + "'" , "lastName = '" + lastname + "'"  + "WHERE email ='" + email + "'")
+
+      ResultSet resultSet = connection.prepareStatement(
+          "UPDATE users SET password = '" + pass + "'" + " role = '" + role + "'" + " firstName = '" + firstname + "'" +
+              " lastName = '" + lastname + "'" + " WHERE email ='" + email + "'" + " RETURNING users.*")
           .executeQuery();
 
       if (resultSet.next()) {

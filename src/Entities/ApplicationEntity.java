@@ -2,16 +2,11 @@ package Entities;
 
 public class ApplicationEntity {
 
-  enum Status {
-    reject,
-    accept,
-    pending
-  }
+  private String status;
 
   private Integer id;
 
-  private Status status;
-
+  private String applicantName;
   private String firstName, lastName, phone, email, address, city, province, position, department, experience1,
       experience2, education1, education2, content;
 
@@ -24,16 +19,24 @@ public class ApplicationEntity {
     return id;
   }
 
+  public String getApplicantName() {
+    return applicantName;
+  }
+
+  public void setApplicantName(String applicantName) {
+    this.applicantName = applicantName;
+  }
+
   public void setId(Integer id) {
     this.id = id;
   }
 
   public String getStatus() {
-    return status.name();
+    return status;
   }
 
   public void setStatus(String status) {
-    this.status = Status.valueOf(status);
+    this.status = status;
   }
 
   public String getFirstName() {
@@ -42,6 +45,7 @@ public class ApplicationEntity {
 
   public void setFirstName(String firstName) {
     this.firstName = firstName;
+    this.applicantName += firstName + " ";
   }
 
   public String getLastName() {
@@ -50,6 +54,7 @@ public class ApplicationEntity {
 
   public void setLastName(String lastName) {
     this.lastName = lastName;
+    this.applicantName += lastName;
   }
 
   public String getPhone() {

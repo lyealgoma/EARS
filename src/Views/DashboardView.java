@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import Controllers.*;
 import Entities.*;
 
-
 public class DashboardView extends Application {
 
   private FacultySearchController facultySearchController = new FacultySearchController();
@@ -38,7 +37,7 @@ public class DashboardView extends Application {
         .listUserAllFacultySearch(userId);
 
     // render list of faculty searches
-   
+
     BorderPane pane = new BorderPane();
 
     pane.setPadding(new Insets(50, 100, 100, 200));
@@ -60,7 +59,7 @@ public class DashboardView extends Application {
 
     Label label = new Label("");
     label.setText(LoginView.userEntity.getFirstName() + "," + LoginView.userEntity.getLastName() + " ");
-    
+
     label.setFont(Font.font(20));
     label.setLayoutX(1050);
     label.setLayoutY(50);
@@ -95,36 +94,36 @@ public class DashboardView extends Application {
     // todo: we should loop the facultySearchesAssignedToUsers list,
     // then display a hyperlink for each element in the list loop
 
-    /* 
-
-    for (int i = 0; i < facultySearchesAssignedToUsers.size(); i++) {
-      FacultySearchEntity facultySearchEntity = facultySearchesAssignedToUsers.get(i);
-
-      
-      Hyperlink link = new Hyperlink(facultySearchEntity.getTitle());
-      
-     
-
-      link.setTextFill(Color.web("0574B2"));
-      link.setLayoutX(400);
-      link.setLayoutY(225 + i * 50);
-      root.getChildren().add(link);
-
-   
-      link.setOnAction(e -> {
-        try {
-          new ViewFacultySearchView().start(new Stage());
-        } catch (Exception e1) {
-          // TODO Auto-generated catch block
-          e1.printStackTrace();
-        }
-      });
-
-    }
-    
-    
-    */
-    
+    /*
+     * 
+     * for (int i = 0; i < facultySearchesAssignedToUsers.size(); i++) {
+     * FacultySearchEntity facultySearchEntity =
+     * facultySearchesAssignedToUsers.get(i);
+     * 
+     * 
+     * Hyperlink link = new Hyperlink(facultySearchEntity.getTitle());
+     * 
+     * 
+     * 
+     * link.setTextFill(Color.web("0574B2"));
+     * link.setLayoutX(400);
+     * link.setLayoutY(225 + i * 50);
+     * root.getChildren().add(link);
+     * 
+     * 
+     * link.setOnAction(e -> {
+     * try {
+     * new ViewFacultySearchView().start(new Stage());
+     * } catch (Exception e1) {
+     * // TODO Auto-generated catch block
+     * e1.printStackTrace();
+     * }
+     * });
+     * 
+     * }
+     * 
+     * 
+     */
 
     ListView<FacultySearchEntity> facultySearchesListView = new ListView<>();
     ArrayList<FacultySearchEntity> facultySearches = facultySearchController.listAllFacultySearches();
@@ -144,12 +143,12 @@ public class DashboardView extends Application {
         if (!cell.isEmpty()) {
           // Handle the click event
           FacultySearchEntity selectedFacultySearch = cell.getItem();
-          //System.out.println("Clicked " + selectedFacultySearch.gettitle());
+          // System.out.println("Clicked " + selectedFacultySearch.gettitle());
           primaryStage.close();
           try {
             // Set the root of the current scene to the new view
             new ViewFacultySearchView(selectedFacultySearch).start(new Stage());
-            //System.out.println("page changed");
+            // System.out.println("page changed");
           } catch (Exception e1) {
             e1.printStackTrace();
           }
@@ -172,8 +171,8 @@ public class DashboardView extends Application {
     facultySearchesListView.setLayoutY(200);
     facultySearchesListView
         .setStyle("-fx-control-inner-background: #a9a9a9;-fx-font-size: 24px; -fx-font-family: 'SketchFlow Print';");
-  
-    root.getChildren().addAll(cameraView, label, label3, pane,facultySearchesListView);
+
+    root.getChildren().addAll(cameraView, label, label3, pane, facultySearchesListView);
 
     Scene scene = new Scene(root, 1280, 720);
     primaryStage.setScene(scene);

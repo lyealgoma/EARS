@@ -2,7 +2,6 @@ package Views;
 
 import java.sql.SQLException;
 
-import Entities.UserEntity;
 import Services.UserService;
 import javafx.application.Application;
 import javafx.geometry.HPos;
@@ -68,7 +67,6 @@ public class Profile extends Application {
 		email.setText(LoginView.userEntity.getEmail());
 		pane.add(email, 1, 11, 2, 1);
 
-
 		Label label9 = new Label("Password");
 		pane.add(label9, 1, 19);
 		PasswordField password = new PasswordField();
@@ -90,11 +88,9 @@ public class Profile extends Application {
 
 		pane2.add(pane, 100, 1);
 		GridPane.setHalignment(pane, HPos.CENTER);
-		
-		
-		//action
-		save.setOnAction(e -> {
 
+		// action
+		save.setOnAction(e -> {
 
 			String firstname = firstName.getText();
 			String lastname = lastName.getText();
@@ -102,12 +98,8 @@ public class Profile extends Application {
 			String Role = role.getText();
 			String Email = email.getText();
 
-			UserService.setUserByEmail(Email,firstname,lastname,Pass,Role);
+			UserService.setUserByEmail(Email, firstname, lastname, Pass, Role);
 
-
-
-
-			
 			try {
 				new AdminUserDashBoardView().start(new Stage());
 			} catch (ClassNotFoundException e1) {

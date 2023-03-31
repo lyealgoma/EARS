@@ -22,6 +22,10 @@ public class UserEntity {
     this.role = role;
   }
 
+  public void setId(Integer id) {
+    this.id = id;
+  }
+
   public String getEmail() {
     return email;
   }

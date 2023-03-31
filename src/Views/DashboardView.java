@@ -32,8 +32,10 @@ public class DashboardView extends Application {
 
   @Override
   public void start(Stage primaryStage) {
+    UserContext userContext = UserContext.getInstance();
+
     ArrayList<FacultySearchEntity> facultySearchesAssignedToUsers = facultySearchController
-        .listUserAllFacultySearch(UserContext.getUser().getID());
+        .listUserAllFacultySearch(userContext.getUser().getID());
 
     // render list of faculty searches
 

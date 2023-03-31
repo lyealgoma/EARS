@@ -98,9 +98,9 @@ public class Profile extends Application {
 			String Email = email.getText();
 
 			UserService.setUserByEmail(Email, firstname, lastname, Pass, Role);
-
+			UserContext userContext = UserContext.getInstance();
 			try {
-				if (UserContext.getUser().isAdmin()) {
+				if (userContext.getUser().isAdmin()) {
 					new AdminUserDashBoardView().start(new Stage());
 				} else {
 					new DashboardView().start(new Stage());

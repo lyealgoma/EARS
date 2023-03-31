@@ -17,6 +17,7 @@ public class UserService {
   public static UserEntity toEntity(ResultSet resultSet) {
     UserEntity userEntity = new UserEntity();
     try {
+      userEntity.setId(resultSet.getInt("id"));
       userEntity.setEmail(resultSet.getString("email"));
       userEntity.setPassword(resultSet.getString("password"));
       userEntity.setFirstName(resultSet.getString("firstName"));
@@ -55,7 +56,7 @@ public class UserService {
       Connection connection = Database.getConnection();
       ResultSet resultSet = connection
           .prepareStatement(
-              "SELECT email, password , firstName , lastName , role FROM users WHERE email ='" + email + "'")
+              "SELECT * FROM users WHERE email ='" + email + "'")
           .executeQuery();
 
       if (resultSet.next()) {

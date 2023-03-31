@@ -1,8 +1,9 @@
 package Views;
 
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 
-import java.time.LocalDate;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 
@@ -24,8 +25,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -35,8 +34,10 @@ import javafx.stage.Stage;
 public class ViewFacultySearchView extends Application {
   private ListApplicationController listApplicationController = new ListApplicationController();
   private FacultySearchEntity facultySearch = new FacultySearchEntity();
-  public ApplicationController applicationController = new ApplicationController();
-
+  private static Integer clickedApplicationId;
+  public static Integer getClickedApplicationId() {
+    return clickedApplicationId;
+  }
   public ViewFacultySearchView() {
 
   }
@@ -45,13 +46,23 @@ public class ViewFacultySearchView extends Application {
     this.facultySearch = facultySearch;
   }
 
+  public void openApplication() throws Exception {
+    try {
+      // Set the root of the current scene to the new view
+      new ApplicationProcessView().start(new Stage());
+      System.out.println("page changed");
+    } catch (Exception e1) {
+      e1.printStackTrace();
+    }
+  }
+
   @Override
   public void start(Stage arg0) throws Exception {
     Pane root = new Pane();
     Scene scene = new Scene(root, 1280, 720, Color.WHITE);
     Stage stage = new Stage();
 
-    Label facultySearchLabel = new Label("Faculty Search: " + facultySearch.gettitle());
+    Label facultySearchLabel = new Label("Faculty Search: Software Engineering Instructor");
     facultySearchLabel.setFont(Font.font(null, FontWeight.BOLD, 26));
     facultySearchLabel.setLayoutX(20);
     facultySearchLabel.setLayoutY(20);
@@ -75,38 +86,21 @@ public class ViewFacultySearchView extends Application {
     });
 
     // Create table view
-    TableView table = new TableView<ApplicationEntity>();
+    TableView<ListApplicationEntity> table = new TableView<ListApplicationEntity>();
     table.setEditable(false);
 
     // table columns
-    TableColumn applicantNameColumn = new TableColumn("Applicant Name");
-    TableColumn submitDateColumn = new TableColumn("Submit Date");
-    TableColumn statusColumn = new TableColumn("Status");
+    TableColumn<ListApplicationEntity, String>  applicantNameColumn = new TableColumn<ListApplicationEntity, String> ("Applicant Name");
+    TableColumn<ListApplicationEntity, Timestamp> submitDateColumn = new TableColumn<ListApplicationEntity, Timestamp> ("Submit Date");
+    TableColumn<ListApplicationEntity, String>  statusColumn = new TableColumn<ListApplicationEntity, String> ("Status");
     // Get values
     applicantNameColumn.setCellValueFactory(new PropertyValueFactory<>("applicantName"));
     submitDateColumn.setCellValueFactory(new PropertyValueFactory<>("submitDate"));
     statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
     // Insert values
-    ObservableList<ListApplicationEntity> apps = FXCollections
-        .observableArrayList(listApplicationController.listFacultySearchApplications(facultySearch.getId()));
+    ObservableList<ListApplicationEntity> apps = FXCollections.observableArrayList(listApplicationController.listFacultySearchApplications(facultySearch.getId()));
+    //ObservableList<ListApplicationEntity> apps = listApplicationController.listFacultySearchApplications(facultySearch.getId());
     table.setItems(apps);
-
-    applicantNameColumn.setCellValueFactory(new PropertyValueFactory<ApplicationEntity, String>("applicantName"));
-    applicantNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-
-    submitDateColumn.setCellValueFactory(new PropertyValueFactory<ApplicationEntity, LocalDate>("submitDate"));
-    // System.out.println(
-    // applicationController.listFacultySearchApplications(facultySearch.getId());
-
-    statusColumn.setCellValueFactory(new PropertyValueFactory<ApplicationEntity, String>("status"));
-    statusColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-
-
-
-
-
-  
-    table.getItems().addAll(listApplicationController.listFacultySearchApplications(facultySearch.getId()));
 
     table.getColumns().addAll(applicantNameColumn, submitDateColumn, statusColumn);
     table.setPrefSize(600, 370);
@@ -116,12 +110,32 @@ public class ViewFacultySearchView extends Application {
     // create table row with a for loop
     // how to to pass id date from a vew to another
     System.out.println(facultySearch.getId());
-    // ObservableList<ApplicationEntity> applications = applicationController
-    // .listFacultySearchApplications(1);
+    //ObservableList<ApplicationEntity> applications = applicationController
+     //   .listFacultySearchApplications(1);
+
 
     table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-    // table.setItems(FXCollections.observableList(applications));
+    
+        // Get clicked table row information
+        table.setRowFactory(e->{
+          TableRow<ListApplicationEntity> row = new TableRow<>();
+          row.setOnMouseClicked(event->{
+            if ((event.getClickCount() == 2) && (!row.isEmpty())) {
+              ListApplicationEntity clickData = row.getItem();
+              clickedApplicationId = clickData.getId();
+              System.out.println("Application Id: " + clickedApplicationId + " is clicked!");
+              //stage.close();
+              try {
+                openApplication();
+              } catch (Exception e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+              }
+            }
+          });
+          return row;
+        });
 
     root.getChildren().add(facultySearchLabel);
     root.getChildren().add(dashboardBtn);
@@ -130,7 +144,9 @@ public class ViewFacultySearchView extends Application {
     stage.setScene(scene);
     stage.setTitle("Employment Application Review System");
     stage.show();
-    stage.requestFocus();
+    //stage.requestFocus();
+
+
 
   }
 

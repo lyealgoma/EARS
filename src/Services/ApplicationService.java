@@ -3,11 +3,8 @@ package Services;
 import Entities.*;
 import DAL.Database;
 import java.sql.*;
-import java.util.ArrayList;
 
 public class ApplicationService {
-  private Connection connection = Database.getConnection();
-
   /**
    * Mapper function to convert the applications db data to our application entity
    * class
@@ -17,8 +14,6 @@ public class ApplicationService {
     try {
       applicationEntity.setId(resultSet.getInt("id"));
       applicationEntity.setStatus(resultSet.getString("status"));
-      applicationEntity.setApplicantName(resultSet.getString("applicantName"));
-      applicationEntity.setSubmitDate(resultSet.getTimestamp("submitDate"));
       applicationEntity.setFirstName(resultSet.getString("firstName"));
       applicationEntity.setLastName(resultSet.getString("lastName"));
       applicationEntity.setPhone(resultSet.getString("phone"));
@@ -41,7 +36,8 @@ public class ApplicationService {
   }
 
   // Get an application
-  public ApplicationEntity getApplicationById(Integer id) {
+  public ApplicationEntity getApplication(Integer applicationId) {
+    Connection connection = Database.getConnection();
     String sql = "";
     ApplicationEntity applicationEntity = null;
     try {
@@ -60,8 +56,8 @@ public class ApplicationService {
           "JSON_UNQUOTE(json_extract(t1.applicantProfile,'$.education2')) as education2, " +
           "t2.content " +
           "from applications t1 left join comments t2 " +
-          "on (t1.id = t2.applicationId) and (t1.id=" + id + ")";
-      ResultSet resultSet = Database.getConnection().createStatement().executeQuery(sql);
+          "on (t1.id = t2.applicationId) where(t1.id=" + applicationId + ")";
+      ResultSet resultSet = connection.createStatement().executeQuery(sql);
 
       // in programming, iterator => mem pointer
 
@@ -72,6 +68,10 @@ public class ApplicationService {
         applicationEntity = ApplicationService.toEntity(resultSet);
       } else {
       }
+      // Close the db connection
+      connection.close();
+      System.out.println("DB is disconnected!");
+      
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -82,6 +82,7 @@ public class ApplicationService {
     // send noty to applicants
     // send noty to head of department
     // ....
+    Connection connection = Database.getConnection();
     String sql = "";
     Statement statement = null;
     ApplicationEntity applicationEntity = new ApplicationEntity();
@@ -92,6 +93,10 @@ public class ApplicationService {
       // ResultSet updatedResult =
       // Database.getConnection().createStatement().executeQuery(sql);
       // @todo: convert the java sql object to our entity class
+
+      // Close the db connection
+      connection.close();
+      System.out.println("DB is disconnected!");
     } catch (SQLException exception) {
       exception.printStackTrace();
     }
@@ -102,6 +107,7 @@ public class ApplicationService {
     // send noty to applicants
     // send noty to head of department
     // ....
+    Connection connection = Database.getConnection();
     String sql = "";
     Statement statement = null;
     ApplicationEntity applicationEntity = new ApplicationEntity();
@@ -109,7 +115,10 @@ public class ApplicationService {
       sql = "update applications set status = 'reject' where id =" + applicationId;
       statement = Database.getConnection().createStatement();
       statement.execute(sql);
-      // @todo: convert the java sql object to our entity class
+
+      // Close the db connection
+      connection.close();
+      System.out.println("DB is disconnected!");
     } catch (SQLException exception) {
       exception.printStackTrace();
     }
@@ -118,6 +127,7 @@ public class ApplicationService {
 
   // Method of updating comment
   public ApplicationEntity updateComment(Integer applicationId, String comment) {
+    Connection connection = Database.getConnection();
     String sql = "";
     Statement statement = null;
     ApplicationEntity applicationEntity = new ApplicationEntity();
@@ -125,9 +135,10 @@ public class ApplicationService {
       sql = "update comments set content = '" + comment + "' where applicationId =" + applicationId;
       statement = Database.getConnection().createStatement();
       statement.execute(sql);
-      // ResultSet updatedResult =
-      // Database.getConnection().createStatement().executeQuery(sql);
-      // @todo: convert the java sql object to our entity class
+
+      // Close the db connection
+      connection.close();
+      System.out.println("DB is disconnected!");
     } catch (SQLException exception) {
       exception.printStackTrace();
     }
@@ -136,6 +147,7 @@ public class ApplicationService {
 
   // Method of saving new comment
   public ApplicationEntity saveComment(Integer applicationId, String comment, Integer userId) {
+    Connection connection = Database.getConnection();
     String sql = "";
     Statement statement = null;
     ApplicationEntity applicationEntity = new ApplicationEntity();
@@ -151,9 +163,10 @@ public class ApplicationService {
       ;
       statement = Database.getConnection().createStatement();
       statement.execute(sql);
-      // ResultSet updatedResult =
-      // Database.getConnection().createStatement().executeQuery(sql);
-      // @todo: convert the java sql object to our entity class
+
+      // Close the db connection
+      connection.close();
+      System.out.println("DB is disconnected!");
     } catch (SQLException exception) {
       exception.printStackTrace();
     }
@@ -162,6 +175,7 @@ public class ApplicationService {
 
   // Method of deleting current comment
   public ApplicationEntity deleteComment(Integer applicationId) {
+    Connection connection = Database.getConnection();
     String sql = "";
     Statement statement = null;
     ApplicationEntity applicationEntity = new ApplicationEntity();
@@ -169,9 +183,10 @@ public class ApplicationService {
       sql = "delete from comments where applicationId =" + applicationId;
       statement = Database.getConnection().createStatement();
       statement.execute(sql);
-      // ResultSet updatedResult =
-      // Database.getConnection().createStatement().executeQuery(sql);
-      // @todo: convert the java sql object to our entity class
+
+      // Close the db connection
+      connection.close();
+      System.out.println("DB is disconnected!");
     } catch (SQLException exception) {
       exception.printStackTrace();
     }

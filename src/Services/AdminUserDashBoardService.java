@@ -26,7 +26,8 @@ public class AdminUserDashBoardService {
 
     public static void updateUserData(UserEntity user) {
         try {
-            PreparedStatement statement = Database.getConnection()
+            Connection connection = Database.getConnection();
+            PreparedStatement statement = connection
                     .prepareStatement("UPDATE users SET firstName = ?, lastName = ? WHERE id = ?");
             statement.setString(1, user.getFirstName());
             statement.setString(2, user.getLastName());
@@ -37,6 +38,7 @@ public class AdminUserDashBoardService {
             } else {
                 System.out.println("Failed to update user data.");
             }
+            connection.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

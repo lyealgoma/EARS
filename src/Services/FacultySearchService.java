@@ -9,9 +9,6 @@ import java.util.Date;
 import Entities.FacultySearchEntity;
 
 public class FacultySearchService {
-  // pool
-  private Connection connection = Database.getConnection();
-
   public static FacultySearchEntity toEntity(ResultSet resultSet) {
     FacultySearchEntity facultySearchEntity = new FacultySearchEntity();
     try {
@@ -26,8 +23,9 @@ public class FacultySearchService {
 
   public ArrayList<FacultySearchEntity> listUserAllFacultySearch(Integer userId) {
     ArrayList<FacultySearchEntity> list = new ArrayList<>();
+    Connection connection = Database.getConnection();
     try {
-      ResultSet resultSet = this.connection.prepareStatement(
+      ResultSet resultSet = connection.prepareStatement(
           "SELECT title FROM facultySearches f JOIN members ON facultySearchId = f.id JOIN users ON members.userId = users.id WHERE users.id="
               + userId)
           .executeQuery();
@@ -37,17 +35,19 @@ public class FacultySearchService {
         list.add(FacultySearchService.toEntity(resultSet));
 
       }
-
+      connection.close();
     } catch (SQLException exception) {
       exception.printStackTrace();
     }
+
     return list;
   }
 
   public ArrayList<FacultySearchEntity> listAllFacultySearch() {
     ArrayList<FacultySearchEntity> list = new ArrayList<>();
     try {
-      ResultSet resultSet = this.connection.prepareStatement(
+      Connection connection = Database.getConnection();
+      ResultSet resultSet = connection.prepareStatement(
           "SELECT * FROM facultySearches")
           .executeQuery();
 
@@ -56,7 +56,7 @@ public class FacultySearchService {
         list.add(FacultySearchService.toEntity(resultSet));
 
       }
-
+      connection.close();
     } catch (SQLException exception) {
       exception.printStackTrace();
     }
@@ -77,13 +77,14 @@ public class FacultySearchService {
     statement.setDate(3, sqlEndDate);
 
     statement.execute();
-    ResultSet rs = connection.prepareStatement("SELECT * FROM facultySearches WHERE id = LAST_INSERT_ID()")
+    ResultSet rs = connection.prepareStatement("SELECT * FROM facultySearches WHERE id=(SELECT LAST_INSERT_ID());")
         .executeQuery();
     if (rs.next()) {
       System.out.println("A new facultySearch was inserted successfully!");
     }
-
-    return FacultySearchService.toEntity(rs);
+    FacultySearchEntity facultySearchEntity = FacultySearchService.toEntity(rs);
+    connection.close();
+    return facultySearchEntity;
   }
 
   public static void assignUserToFacultySearch(Integer userId, Integer facultySearchId, String role)
@@ -99,5 +100,6 @@ public class FacultySearchService {
     statement.setInt(2, facultySearchId);
     statement.setString(3, role);
     statement.execute();
+    connection.close();
   }
 }

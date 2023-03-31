@@ -112,7 +112,7 @@ public class CreateFacultySearchView extends Application {
 
         // Set the root of the current scene to the new view
         new AdminDashBoardView().start(new Stage());
-        //System.out.println("page changed");
+        // System.out.println("page changed");
       } catch (Exception e1) {
         e1.printStackTrace();
       }
@@ -236,6 +236,12 @@ public class CreateFacultySearchView extends Application {
       } catch (SQLException e1) {
         e1.printStackTrace();
       }
+      try {
+        new AdminDashBoardView().start(new Stage());
+      } catch (Exception e2) {
+        e2.printStackTrace();
+      }
+      ps.close();
     });
 
     root.getChildren().add(line);

@@ -2,14 +2,11 @@
 package Services;
 
 import java.util.ArrayList;
-import Entities.*;
 import DAL.Database;
 import java.sql.*;
-import java.time.ZoneId;
 import java.util.Date;
 
 import Entities.FacultySearchEntity;
-
 
 public class FacultySearchService {
   // pool
@@ -69,7 +66,7 @@ public class FacultySearchService {
   // this service is only for handling faculty search
   public static FacultySearchEntity createFacultySearch(FacultySearchEntity facultySearch) throws SQLException {
     Connection connection = Database.getConnection();
-    String query = "INSERT INTO facultySearches (title, startDate, endDate) VALUES (?, ?, ?) RETURNING facultySearches.*";
+    String query = "INSERT INTO facultySearches (title, startDate, endDate) VALUES (?, ?, ?)";
     PreparedStatement statement = connection.prepareStatement(query);
     Date startDate = facultySearch.getStartDate();
     Date endDate = facultySearch.getEndDate();
@@ -79,7 +76,9 @@ public class FacultySearchService {
     statement.setDate(2, sqlStartDate);
     statement.setDate(3, sqlEndDate);
 
-    ResultSet rs = statement.executeQuery();
+    statement.execute();
+    ResultSet rs = connection.prepareStatement("SELECT * FROM facultySearches WHERE id = LAST_INSERT_ID()")
+        .executeQuery();
     if (rs.next()) {
       System.out.println("A new facultySearch was inserted successfully!");
     }
@@ -93,9 +92,12 @@ public class FacultySearchService {
     // create a member to link user with search
 
     Connection connection = Database.getConnection();
-    String query = "INSERT INTO members (userId, facultySearchId, role) VALUES (" + userId + ", " + facultySearchId
-        + ", " + role + ")";
+    String query = "INSERT INTO members (userId, facultySearchId, role) VALUES (?, ?, ?)";
+
     PreparedStatement statement = connection.prepareStatement(query);
-    statement.executeQuery();
+    statement.setInt(1, userId);
+    statement.setInt(2, facultySearchId);
+    statement.setString(3, role);
+    statement.execute();
   }
 }

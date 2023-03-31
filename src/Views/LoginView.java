@@ -89,15 +89,14 @@ public class LoginView extends Application {
 
       Boolean isAuthenticated = UserController.authenticate(email, password);
       if (isAuthenticated == true) {
-       
-        userEntity = UserService.getUserByEmail(email);
-        
-          if(userEntity.getRole().equalsIgnoreCase("regular")){
-            new DashboardView().start(new Stage());
-          }
 
-          
-          if(userEntity.getRole().equalsIgnoreCase("admin")){
+        userEntity = UserService.getUserByEmail(email);
+
+        if (userEntity.getRole().equalsIgnoreCase("regular")) {
+          new DashboardView().start(new Stage());
+        }
+
+        if (userEntity.getRole().equalsIgnoreCase("admin")) {
           try {
             new AdminUserDashBoardView().start(new Stage());
           } catch (ClassNotFoundException e1) {
@@ -107,16 +106,13 @@ public class LoginView extends Application {
             // TODO Auto-generated catch block
             e1.printStackTrace();
           }
-          }
-         
-        
-
+        }
+        primaryStage.close();
       }
 
       if (isAuthenticated == false) {
         System.out.println("username/password incorrect");
       }
-
     });
 
     cancel.setOnAction(e -> {

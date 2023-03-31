@@ -17,6 +17,8 @@ public class ApplicationService {
     try {
       applicationEntity.setId(resultSet.getInt("id"));
       applicationEntity.setStatus(resultSet.getString("status"));
+      applicationEntity.setApplicantName(resultSet.getString("applicantName"));
+      applicationEntity.setSubmitDate(resultSet.getTimestamp("submitDate"));
       applicationEntity.setFirstName(resultSet.getString("firstName"));
       applicationEntity.setLastName(resultSet.getString("lastName"));
       applicationEntity.setPhone(resultSet.getString("phone"));

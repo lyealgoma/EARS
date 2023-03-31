@@ -5,11 +5,9 @@ import java.util.ArrayList;
 import Entities.*;
 import DAL.Database;
 import java.sql.*;
+import java.time.ZoneId;
+import java.util.Date;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import Entities.FacultySearchEntity;
 
@@ -69,18 +67,23 @@ public class FacultySearchService {
   }
 
   // this service is only for handling faculty search
-  public static FacultySearchEntity createFacultySearch(String title, Date starDate, Date endDate) throws SQLException {
+  public static void createFacultySearch(FacultySearchEntity facultySearch) throws SQLException {
     Connection connection = Database.getConnection();
     String query = "INSERT INTO facultySearches (title, startDate, endDate) VALUES (?, ?, ?)";
     PreparedStatement statement = connection.prepareStatement(query);
-    statement.setString(1, title);
-    statement.setDate(2, starDate);
-    statement.setDate(3, endDate);
+    Date startDate = facultySearch.getStartDate();
+    Date endDate = facultySearch.getEndDate();
+    java.sql.Date sqlStartDate = new java.sql.Date(startDate.getTime());
+    java.sql.Date sqlEndDate = new java.sql.Date(endDate.getTime());
+    statement.setString(1, facultySearch.gettitle());
+    statement.setDate(2, sqlStartDate);
+    statement.setDate(3,sqlEndDate);
 
-    ResultSet resultSet = statement.executeQuery();
-    resultSet.next();
+    int rowsInserted = statement.executeUpdate();
+    if (rowsInserted > 0) {
+        System.out.println("A new facultySearch was inserted successfully!");
+    }
 
-    return FacultySearchService.toEntity(resultSet);
   }
 
   public static void assignUserToFacultySearch(Integer userId, Integer facultySearchId) throws SQLException {

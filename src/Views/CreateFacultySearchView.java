@@ -24,8 +24,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -174,13 +176,25 @@ public class CreateFacultySearchView extends Application {
     for (UserEntity user : users) {
       userNames.add(user.getFirstName() + user.getLastName());
     }
-    ObservableList<String> observableList = FXCollections.observableArrayList(userNames);
-    ChoiceBox committeeChairCBOX = new ChoiceBox();
-    committeeChairCBOX.setItems(observableList);
+
+    ObservableList<UserEntity> observableList = FXCollections.observableArrayList(users);
+    ChoiceBox<UserEntity> committeeChairCBOX = new ChoiceBox<>();
+    committeeChairCBOX.getItems().addAll(observableList);
     committeeChairCBOX.setLayoutX(570);
     committeeChairCBOX.setLayoutY(380);
 
-    ChoiceBox<String> committeeMembersCBOX = new ChoiceBox();
+    // committeeChairCBOX.setConverter(new StringConverter<UserEntity>() {
+    //     public String toString(UserEntity user) {
+    //         return user.toString();
+    //     }
+
+    //     public UserEntity fromString(String name) {
+    //         // This method is not used in this example
+    //         return null;
+    //     }
+    // });
+
+    ChoiceBox<UserEntity> committeeMembersCBOX = new ChoiceBox();
     committeeMembersCBOX.setItems(observableList);
     committeeMembersCBOX.setLayoutX(570);
     committeeMembersCBOX.setLayoutY(440);
@@ -196,10 +210,13 @@ public class CreateFacultySearchView extends Application {
     addButton.setPrefHeight(30);
     addButton.setLayoutX(850);
     addButton.setLayoutY(440);
+
     addButton.setOnAction(e -> {
-      String selectedMember = committeeMembersCBOX.getValue();
+      UserEntity selectedMember = committeeMembersCBOX.getValue();
       if (selectedMember != null) {
-        selectedmembersList.getItems().add(selectedMember);
+        selectedmembersList.getItems().addAll(selectedMember.toString());
+        committeeMembersCBOX.getSelectionModel().clearSelection();
+        committeeMembersCBOX.getItems().remove(selectedMember);
       }
     });
 
@@ -222,8 +239,17 @@ public class CreateFacultySearchView extends Application {
     createButton.setLayoutY(650);
 
     createButton.setOnAction(e -> {
-      FacultySearchController.createFacultySearch(titleField.getText(), Date.valueOf(startDate.getValue()),
-          Date.valueOf(endDate.getValue()));
+      FacultySearchEntity facultySearch = new FacultySearchEntity(titleField.getText(), Date.valueOf(startDate.getValue()),
+      Date.valueOf(endDate.getValue()));
+      try {
+        FacultySearchController.createFacultySearch(facultySearch);
+    } catch (SQLException e1) {
+        // TODO Auto-generated catch block
+        e1.printStackTrace();
+    }
+
+
+    
     });
 
     root.getChildren().add(line);

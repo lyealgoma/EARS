@@ -251,45 +251,25 @@ public class AdminUserDashBoardView extends Application {
     TableColumn<UserEntity, String> firstNameColumn = new TableColumn<UserEntity, String>("First Name");
     firstNameColumn.setCellValueFactory(new PropertyValueFactory<UserEntity, String>("firstName"));
     firstNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-    firstNameColumn.setOnEditCommit(new EventHandler<CellEditEvent<UserEntity, String>>() {
-      public void handle(CellEditEvent<UserEntity, String> event) {
-        UserEntity user = event.getRowValue();
-        user.setFirstName(event.getNewValue());
-      }
-    });
+
 
     TableColumn<UserEntity, String> lastNameColumn = new TableColumn<UserEntity, String>("Last Name");
     lastNameColumn.setCellValueFactory(new PropertyValueFactory<UserEntity, String>("lastName"));
     lastNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-    lastNameColumn.setOnEditCommit(new EventHandler<CellEditEvent<UserEntity, String>>() {
-      public void handle(CellEditEvent<UserEntity, String> event) {
-        UserEntity user = event.getRowValue();
-        user.setLastName(event.getNewValue());
-      }
-    });
+
 
     TableColumn<UserEntity, String> emailColumn = new TableColumn<UserEntity, String>("Email");
     emailColumn.setCellValueFactory(new PropertyValueFactory<UserEntity, String>("email"));
     emailColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-    emailColumn.setOnEditCommit(new EventHandler<CellEditEvent<UserEntity, String>>() {
-      public void handle(CellEditEvent<UserEntity, String> event) {
-        UserEntity user = event.getRowValue();
-        user.setEmail(event.getNewValue());
-      }
-    });
+
 
     TableColumn<UserEntity, String> blankColumn = new TableColumn<UserEntity, String>("");
 
     TableColumn<UserEntity, String> roleColumn = new TableColumn<UserEntity, String>("Role");
     roleColumn.setCellValueFactory(new PropertyValueFactory<UserEntity, String>("role"));
     roleColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-    roleColumn.setOnEditCommit(new EventHandler<CellEditEvent<UserEntity, String>>() {
-      public void handle(CellEditEvent<UserEntity, String> event) {
-        UserEntity user = event.getRowValue();
-        /* user.setRole(event.getNewValue()); */
-      }
-    });
+
     nameColumn.getColumns().addAll(firstNameColumn, lastNameColumn);
 
     // table.getColumns().add(firstNameColumn);

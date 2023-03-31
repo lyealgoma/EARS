@@ -1,6 +1,7 @@
 package Controllers;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import Entities.*;
@@ -20,13 +21,13 @@ public class FacultySearchController {
     return service.listAllFacultySearch();
   }
 
-  public static FacultySearchEntity createFacultySearch(String title, Date starDate, Date endDate) {
-    FacultySearchEntity facultySearchEntity = null;
-    try {
-      facultySearchEntity = FacultySearchService.createFacultySearch(title, starDate, endDate);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return facultySearchEntity;
+  public static void createFacultySearch(FacultySearchEntity facultySearchEntity) throws SQLException {
+    
+  
+      FacultySearchService.createFacultySearch(facultySearchEntity);
+ 
+}
+
+  public static void createFacultySearch(String text, Date valueOf, Date valueOf2) {
   }
 }

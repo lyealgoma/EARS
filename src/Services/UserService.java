@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import DAL.Database;
 import Entities.*;
-import javafx.scene.control.TextField;
 
 public class UserService {
   /**
@@ -76,17 +75,17 @@ public class UserService {
     UserEntity userEntity = null;
     try {
       Connection connection = Database.getConnection();
-        
-        String query = "UPDATE users SET password=?, role=?, firstName=?, lastName=? WHERE email=?";
-        PreparedStatement statement = connection.prepareStatement(query);
-        statement.setString(1, pass);
-        statement.setString(2, role);
-        statement.setString(3, firstname);
-        statement.setString(4, lastname);
-        statement.setString(5, email);
-        statement.executeUpdate();
 
+      String query = "UPDATE users SET password=?, role=?, firstName=?, lastName=? WHERE email=?";
+      PreparedStatement statement = connection.prepareStatement(query);
+      statement.setString(1, pass);
+      statement.setString(2, role);
+      statement.setString(3, firstname);
+      statement.setString(4, lastname);
+      statement.setString(5, email);
+      statement.executeUpdate();
 
+      connection.close();
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -97,7 +96,8 @@ public class UserService {
 
   public static ArrayList<UserEntity> getAllUsers() throws SQLException, ClassNotFoundException {
     String query = "SELECT * FROM users";
-    Statement stmt = Database.getConnection().createStatement();
+    Connection connection = Database.getConnection();
+    Statement stmt = connection.createStatement();
     ResultSet rs = stmt.executeQuery(query);
     ArrayList<UserEntity> userList = new ArrayList<UserEntity>();
     while (rs.next()) {
@@ -108,7 +108,9 @@ public class UserService {
       String role = rs.getString("role");
 
       userList.add(new UserEntity(id, firstName, lastName, email, role));
+
     }
+    connection.close();
     return userList;
   }
 

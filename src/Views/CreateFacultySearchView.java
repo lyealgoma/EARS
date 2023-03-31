@@ -36,7 +36,6 @@ public class CreateFacultySearchView extends Application {
   private TextField titleField;
   private DatePicker startDate;
   private DatePicker endDate;
-  private HashMap<String, Object> facultySearchData = new HashMap<>();
 
   @Override
   public void start(Stage ps) throws Exception {

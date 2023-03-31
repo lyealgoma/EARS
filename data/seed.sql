@@ -1,8 +1,8 @@
 -- Seed test data
 
-
-
 INSERT INTO departments VALUES (1, 'cs');
+
+INSERT INTO departments VALUES (2, 'math');
 
 INSERT INTO
     users (
@@ -24,10 +24,6 @@ VALUES (
         1
     );
 
-
-
-INSERT INTO departments VALUES (2, 'math');
-
 INSERT INTO
     users (
         `id`,
@@ -40,7 +36,7 @@ INSERT INTO
     )
 VALUES (
         2,
-        'user@algomau.ca',
+        'user1@algomau.ca',
         '12345678',
         'smit',
         'shiroya',
@@ -48,6 +44,45 @@ VALUES (
         2
     );
 
+INSERT INTO
+    users (
+        `id`,
+        `email`,
+        `password`,
+        `firstName`,
+        `lastName`,
+        `role`,
+        `departmentId`
+    )
+VALUES (
+        3,
+        'user2@algomau.ca',
+        '12345678',
+        'patel',
+        'sarkar',
+        'regular',
+        2
+    );
+
+INSERT INTO
+    users (
+        `id`,
+        `email`,
+        `password`,
+        `firstName`,
+        `lastName`,
+        `role`,
+        `departmentId`
+    )
+VALUES (
+        4,
+        'user3@algomau.ca',
+        '12345678',
+        'nick',
+        'Jones',
+        'regular',
+        1
+    );
 
 INSERT INTO
     facultySearches (

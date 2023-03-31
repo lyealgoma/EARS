@@ -24,6 +24,7 @@ import javafx.stage.Stage;
 public class ViewFacultySearchView extends Application {
   private ApplicationController applicationController = new ApplicationController();
   private FacultySearchEntity facultySearch = new FacultySearchEntity();
+  public static Label facultySearchLabel;
 
   public ViewFacultySearchView() {
 
@@ -39,7 +40,7 @@ public class ViewFacultySearchView extends Application {
     Scene scene = new Scene(root, 1280, 720, Color.WHITE);
     Stage stage = new Stage();
 
-    Label facultySearchLabel = new Label("Faculty Search: Software Engineering Instructor");
+    //facultySearchLabel = new Label("Faculty Search: Software Engineering Instructor");
     facultySearchLabel.setFont(Font.font(null, FontWeight.BOLD, 26));
     facultySearchLabel.setLayoutX(20);
     facultySearchLabel.setLayoutY(20);

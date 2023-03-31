@@ -89,22 +89,7 @@ public class LoginView extends Application {
 
       Boolean isAuthenticated = UserController.authenticate(email, password);
       if (isAuthenticated == true) {
-        // also need to check the user role to direct to different page
-        // redirect user to dashboard
-
-        // Dashboardemail = email;
-        // String firstname =
-        // UserController.firstName(email);
-        // String lname =
-        // UserController.lastName(email);
-        // String pass =
-        // UserController.Pass(email);
-        // String role =
-        // UserController.Role(email);
-        // fname1 = fname;
-        // lname1 = lname;
-        // pass1 = pass;
-        // role1 = role;
+       
         userEntity = UserService.getUserByEmail(email);
         
           if(userEntity.getRole().equalsIgnoreCase("regular")){

@@ -5,7 +5,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import DAL.Database;
 import java.sql.*;
-import java.util.ArrayList;
 
 public class ListApplicationService {
     private Connection connection = Database.getConnection();
@@ -16,6 +15,7 @@ public class ListApplicationService {
     public static ListApplicationEntity toEntity(ResultSet resultSet) {
       ListApplicationEntity listApplicationEntity = new ListApplicationEntity();
       try {
+        listApplicationEntity.setId(resultSet.getInt("id"));
         listApplicationEntity.setApplicantName(resultSet.getString("applicantName"));
         listApplicationEntity.setSubmitDate(resultSet.getTimestamp("submitDate"));
         listApplicationEntity.setStatus(resultSet.getString("status"));
@@ -26,11 +26,11 @@ public class ListApplicationService {
     }
 
 
-    public ObservableList<ListApplicationEntity> listFacultySearchApplications(Integer facultySearchId) {
+    public ObservableList<ListApplicationEntity> listFacultySearchApplications(Integer facultySearchId) throws SQLException {
         String sql = "";
         ObservableList<ListApplicationEntity> applications = FXCollections.observableArrayList();
         try {
-        sql = "select CONCAT(JSON_UNQUOTE(json_extract(applicantProfile,'$.firstName')),' ',JSON_UNQUOTE(json_extract(applicantProfile,'$.lastName'))) as applicantName, submitDate,status from applications where facultySearchId = " + facultySearchId;
+        sql = "select id,CONCAT(JSON_UNQUOTE(json_extract(applicantProfile,'$.firstName')),' ',JSON_UNQUOTE(json_extract(applicantProfile,'$.lastName'))) as applicantName, submitDate,status from applications where facultySearchId = " + facultySearchId;
         ResultSet resultSet = Database.getConnection().createStatement().executeQuery(sql);
 
         // in programming, iterator => mem pointer
@@ -43,8 +43,13 @@ public class ListApplicationService {
             while (resultSet.next()) {
             applications.add(ListApplicationService.toEntity(resultSet));
             }
+
+            // Close the db connection
+            Database.getConnection().close();
+            System.out.println("DB is disconnected!");
+
         } catch (SQLException e) {
-        e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return applications;
   }

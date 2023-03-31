@@ -22,11 +22,21 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import static javafx.scene.text.Font.*;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import Controllers.*;
+import DAL.Database;
 
 public class ApplicationProcessView extends Application {
     ApplicationController applicationController = new ApplicationController();
-    protected Integer id = 1;
+    protected Integer id = ViewFacultySearchView.getClickedApplicationId();
+    protected String loginEmail = LoginView.getLoginEmail();
+
+    UserEntity user = new UserEntity();
+    private Integer usrId = getUsrId(loginEmail);
 
     protected TextField fNameTextField = new TextField();
     protected TextField lNameTextField = new TextField();
@@ -53,7 +63,6 @@ public class ApplicationProcessView extends Application {
     protected Button btnDeleteComment = new Button("Delete");
     protected Button btnIgnoreComment = new Button("Ignore");
 
-    private Integer usrId;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -62,7 +71,7 @@ public class ApplicationProcessView extends Application {
 
         // render button for accept/reject
         //
-
+        System.out.println("appid: " + id + ", userid: "+ usrId);
         // Create a border Pane
         BorderPane borderPane = new BorderPane();
         // Set padding value for borderPane
@@ -86,9 +95,14 @@ public class ApplicationProcessView extends Application {
         stage.show();
         // Close the app when the stage is closed
         stage.setOnCloseRequest(e -> {
-            System.exit(0);
+            //System.exit(0);
+            stage.hide();
         });
 
+        btnIgnore.setOnAction(e -> {
+            //System.exit(0);
+            stage.hide();
+        });
         // Fill data into TextFields
         loadData();
 
@@ -364,10 +378,6 @@ public class ApplicationProcessView extends Application {
             msgbox.showAndWait();
         });
 
-        btnIgnore.setOnAction(e -> {
-            System.exit(0);
-        });
-
         btnReject.setOnAction(e -> {
             // Update status for the application
             ApplicationEntity updatedApplication = applicationController.rejectApplication(id);
@@ -494,8 +504,7 @@ public class ApplicationProcessView extends Application {
         education2TextArea.setText(String.valueOf(application.getEducation2()));
         applicationIDTextField.setText(String.valueOf(application.getId()));
 
-        // appId = application.getId();
-        usrId = 1; // need to modify in the end
+
     } // End of Loading data method
 
     // Load comment into UI
@@ -521,6 +530,28 @@ public class ApplicationProcessView extends Application {
         // refresh the application data in the view;
         // pane.set
 
+    }
+
+    public Integer getUsrId (String email) {
+        Integer id = null;
+        Connection connection = Database.getConnection();
+    String sql = "";
+    try {
+      sql = "select id from users where email = '" + loginEmail + "'";
+      ResultSet resultSet = connection.createStatement().executeQuery(sql);
+
+      if (resultSet.next()) {
+        id = (resultSet.getInt("id"));
+      } else {
+      }
+      // Close the db connection
+      connection.close();
+      System.out.println("DB is disconnected!");
+      
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+        return id;
     }
 
 }

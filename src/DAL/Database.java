@@ -3,21 +3,16 @@ package DAL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-
-import Entities.UserEntity;
 
 // Database access layer
 public class Database {
   public static final String HOST = "localhost:3306/";
   public static final String DB = "ears";
   public static final String USER = "root";
-  public static final String PASS = "password";
+  public static final String PASS = "12345678";
   private static HikariDataSource dataSource = null;
 
   static {

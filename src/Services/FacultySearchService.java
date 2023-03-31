@@ -8,7 +8,6 @@ import java.sql.*;
 import java.time.ZoneId;
 import java.util.Date;
 
-
 import Entities.FacultySearchEntity;
 
 public class FacultySearchService {
@@ -67,9 +66,9 @@ public class FacultySearchService {
   }
 
   // this service is only for handling faculty search
-  public static void createFacultySearch(FacultySearchEntity facultySearch) throws SQLException {
+  public static FacultySearchEntity createFacultySearch(FacultySearchEntity facultySearch) throws SQLException {
     Connection connection = Database.getConnection();
-    String query = "INSERT INTO facultySearches (title, startDate, endDate) VALUES (?, ?, ?)";
+    String query = "INSERT INTO facultySearches (title, startDate, endDate) VALUES (?, ?, ?) RETURNING facultySearches.*";
     PreparedStatement statement = connection.prepareStatement(query);
     Date startDate = facultySearch.getStartDate();
     Date endDate = facultySearch.getEndDate();
@@ -77,21 +76,24 @@ public class FacultySearchService {
     java.sql.Date sqlEndDate = new java.sql.Date(endDate.getTime());
     statement.setString(1, facultySearch.gettitle());
     statement.setDate(2, sqlStartDate);
-    statement.setDate(3,sqlEndDate);
+    statement.setDate(3, sqlEndDate);
 
-    int rowsInserted = statement.executeUpdate();
-    if (rowsInserted > 0) {
-        System.out.println("A new facultySearch was inserted successfully!");
+    ResultSet rs = statement.executeQuery();
+    if (rs.next()) {
+      System.out.println("A new facultySearch was inserted successfully!");
     }
 
+    return FacultySearchService.toEntity(rs);
   }
 
-  public static void assignUserToFacultySearch(Integer userId, Integer facultySearchId) throws SQLException {
+  public static void assignUserToFacultySearch(Integer userId, Integer facultySearchId, String role)
+      throws SQLException {
     // under the system, create member
     // create a member to link user with search
 
     Connection connection = Database.getConnection();
-    String query = "INSERT INTO members (userId, facultySearchId) VALUES (" + userId + ", " + facultySearchId + ")";
+    String query = "INSERT INTO members (userId, facultySearchId, role) VALUES (" + userId + ", " + facultySearchId
+        + ", " + role + ")";
     PreparedStatement statement = connection.prepareStatement(query);
     statement.executeQuery();
   }

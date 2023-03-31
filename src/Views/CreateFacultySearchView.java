@@ -1,13 +1,12 @@
 package Views;
 
+import java.util.HashMap;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.HPos;
-import javafx.geometry.Insets;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -15,8 +14,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -24,7 +21,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.StringConverter;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -40,6 +36,7 @@ public class CreateFacultySearchView extends Application {
   private TextField titleField;
   private DatePicker startDate;
   private DatePicker endDate;
+  private HashMap<String, Object> facultySearchData = new HashMap<>();
 
   @Override
   public void start(Stage ps) throws Exception {
@@ -183,21 +180,11 @@ public class CreateFacultySearchView extends Application {
     committeeChairCBOX.setLayoutX(570);
     committeeChairCBOX.setLayoutY(380);
 
-    // committeeChairCBOX.setConverter(new StringConverter<UserEntity>() {
-    //     public String toString(UserEntity user) {
-    //         return user.toString();
-    //     }
-
-    //     public UserEntity fromString(String name) {
-    //         // This method is not used in this example
-    //         return null;
-    //     }
-    // });
-
-    ChoiceBox<UserEntity> committeeMembersCBOX = new ChoiceBox();
+    ChoiceBox<UserEntity> committeeMembersCBOX = new ChoiceBox<UserEntity>();
     committeeMembersCBOX.setItems(observableList);
     committeeMembersCBOX.setLayoutX(570);
     committeeMembersCBOX.setLayoutY(440);
+    ArrayList<Integer> memberUserIds = new ArrayList<Integer>();
 
     ListView<String> selectedmembersList = new ListView<>();
     selectedmembersList.setLayoutX(570);
@@ -212,11 +199,12 @@ public class CreateFacultySearchView extends Application {
     addButton.setLayoutY(440);
 
     addButton.setOnAction(e -> {
-      UserEntity selectedMember = committeeMembersCBOX.getValue();
-      if (selectedMember != null) {
-        selectedmembersList.getItems().addAll(selectedMember.toString());
+      UserEntity selectedUser = committeeMembersCBOX.getValue();
+      if (selectedUser != null) {
+        selectedmembersList.getItems().addAll(selectedUser.toString());
+        memberUserIds.add(selectedUser.getID());
         committeeMembersCBOX.getSelectionModel().clearSelection();
-        committeeMembersCBOX.getItems().remove(selectedMember);
+        committeeMembersCBOX.getItems().remove(selectedUser);
       }
     });
 
@@ -239,17 +227,15 @@ public class CreateFacultySearchView extends Application {
     createButton.setLayoutY(650);
 
     createButton.setOnAction(e -> {
-      FacultySearchEntity facultySearch = new FacultySearchEntity(titleField.getText(), Date.valueOf(startDate.getValue()),
-      Date.valueOf(endDate.getValue()));
+      FacultySearchEntity facultySearch = new FacultySearchEntity(titleField.getText(),
+          Date.valueOf(startDate.getValue()),
+          Date.valueOf(endDate.getValue()));
       try {
-        FacultySearchController.createFacultySearch(facultySearch);
-    } catch (SQLException e1) {
-        // TODO Auto-generated catch block
+        Integer userId = committeeChairCBOX.getValue().getID();
+        FacultySearchController.createFacultySearch(facultySearch, memberUserIds, userId);
+      } catch (SQLException e1) {
         e1.printStackTrace();
-    }
-
-
-    
+      }
     });
 
     root.getChildren().add(line);

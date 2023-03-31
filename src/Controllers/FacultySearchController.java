@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import Entities.*;
-import Services.*;;
+import Services.*;
 
 public class FacultySearchController {
   // for regular user
@@ -21,12 +21,19 @@ public class FacultySearchController {
     return service.listAllFacultySearch();
   }
 
-  public static void createFacultySearch(FacultySearchEntity facultySearchEntity) throws SQLException {
-    
-  
-      FacultySearchService.createFacultySearch(facultySearchEntity);
- 
-}
+  public static void createFacultySearch(FacultySearchEntity fSearchEntity, ArrayList<Integer> memberUserIds,
+      Integer chairId) throws SQLException {
+    fSearchEntity.setStatus("active");
+    FacultySearchEntity newFacultySearch = FacultySearchService.createFacultySearch(fSearchEntity);
+    // create membere
+    for (Integer userId : memberUserIds) {
+      String role = "member";
+      FacultySearchService.assignUserToFacultySearch(userId, newFacultySearch.getId(), role);
+    }
+    String role = "chair";
+    FacultySearchService.assignUserToFacultySearch(chairId, newFacultySearch.getId(), role);
+
+  }
 
   public static void createFacultySearch(String text, Date valueOf, Date valueOf2) {
   }

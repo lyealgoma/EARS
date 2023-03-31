@@ -70,4 +70,8 @@ public class UserEntity {
     return this.password.equals(password);
   }
 
+  public String toString() {
+    return firstName + " " + lastName;
+  }
+
 }

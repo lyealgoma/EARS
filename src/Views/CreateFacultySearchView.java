@@ -1,13 +1,12 @@
 package Views;
 
+import java.util.HashMap;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.HPos;
-import javafx.geometry.Insets;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -15,8 +14,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -26,6 +23,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +36,7 @@ public class CreateFacultySearchView extends Application {
   private TextField titleField;
   private DatePicker startDate;
   private DatePicker endDate;
+  private HashMap<String, Object> facultySearchData = new HashMap<>();
 
   @Override
   public void start(Stage ps) throws Exception {
@@ -113,7 +112,7 @@ public class CreateFacultySearchView extends Application {
 
         // Set the root of the current scene to the new view
         new AdminDashBoardView().start(new Stage());
-        //System.out.println("page changed");
+        // System.out.println("page changed");
       } catch (Exception e1) {
         e1.printStackTrace();
       }
@@ -174,16 +173,18 @@ public class CreateFacultySearchView extends Application {
     for (UserEntity user : users) {
       userNames.add(user.getFirstName() + user.getLastName());
     }
-    ObservableList<String> observableList = FXCollections.observableArrayList(userNames);
-    ChoiceBox committeeChairCBOX = new ChoiceBox();
-    committeeChairCBOX.setItems(observableList);
+
+    ObservableList<UserEntity> observableList = FXCollections.observableArrayList(users);
+    ChoiceBox<UserEntity> committeeChairCBOX = new ChoiceBox<>();
+    committeeChairCBOX.getItems().addAll(observableList);
     committeeChairCBOX.setLayoutX(570);
     committeeChairCBOX.setLayoutY(380);
 
-    ChoiceBox<String> committeeMembersCBOX = new ChoiceBox();
+    ChoiceBox<UserEntity> committeeMembersCBOX = new ChoiceBox<UserEntity>();
     committeeMembersCBOX.setItems(observableList);
     committeeMembersCBOX.setLayoutX(570);
     committeeMembersCBOX.setLayoutY(440);
+    ArrayList<Integer> memberUserIds = new ArrayList<Integer>();
 
     ListView<String> selectedmembersList = new ListView<>();
     selectedmembersList.setLayoutX(570);
@@ -196,10 +197,14 @@ public class CreateFacultySearchView extends Application {
     addButton.setPrefHeight(30);
     addButton.setLayoutX(850);
     addButton.setLayoutY(440);
+
     addButton.setOnAction(e -> {
-      String selectedMember = committeeMembersCBOX.getValue();
-      if (selectedMember != null) {
-        selectedmembersList.getItems().add(selectedMember);
+      UserEntity selectedUser = committeeMembersCBOX.getValue();
+      if (selectedUser != null) {
+        selectedmembersList.getItems().addAll(selectedUser.toString());
+        memberUserIds.add(selectedUser.getID());
+        committeeMembersCBOX.getSelectionModel().clearSelection();
+        committeeMembersCBOX.getItems().remove(selectedUser);
       }
     });
 
@@ -222,8 +227,21 @@ public class CreateFacultySearchView extends Application {
     createButton.setLayoutY(650);
 
     createButton.setOnAction(e -> {
-      FacultySearchController.createFacultySearch(titleField.getText(), Date.valueOf(startDate.getValue()),
+      FacultySearchEntity facultySearch = new FacultySearchEntity(titleField.getText(),
+          Date.valueOf(startDate.getValue()),
           Date.valueOf(endDate.getValue()));
+      try {
+        Integer userId = committeeChairCBOX.getValue().getID();
+        FacultySearchController.createFacultySearch(facultySearch, memberUserIds, userId);
+      } catch (SQLException e1) {
+        e1.printStackTrace();
+      }
+      try {
+        new AdminDashBoardView().start(new Stage());
+      } catch (Exception e2) {
+        e2.printStackTrace();
+      }
+      ps.close();
     });
 
     root.getChildren().add(line);

@@ -2,17 +2,11 @@
 package Services;
 
 import java.util.ArrayList;
-import Entities.*;
 import DAL.Database;
 import java.sql.*;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.Date;
 
 import Entities.FacultySearchEntity;
-
 
 public class FacultySearchService {
   // pool
@@ -70,27 +64,40 @@ public class FacultySearchService {
   }
 
   // this service is only for handling faculty search
-  public static FacultySearchEntity createFacultySearch(String title, Date starDate, Date endDate) throws SQLException {
+  public static FacultySearchEntity createFacultySearch(FacultySearchEntity facultySearch) throws SQLException {
     Connection connection = Database.getConnection();
     String query = "INSERT INTO facultySearches (title, startDate, endDate) VALUES (?, ?, ?)";
     PreparedStatement statement = connection.prepareStatement(query);
-    statement.setString(1, title);
-    statement.setDate(2, starDate);
-    statement.setDate(3, endDate);
+    Date startDate = facultySearch.getStartDate();
+    Date endDate = facultySearch.getEndDate();
+    java.sql.Date sqlStartDate = new java.sql.Date(startDate.getTime());
+    java.sql.Date sqlEndDate = new java.sql.Date(endDate.getTime());
+    statement.setString(1, facultySearch.gettitle());
+    statement.setDate(2, sqlStartDate);
+    statement.setDate(3, sqlEndDate);
 
-    ResultSet resultSet = statement.executeQuery();
-    resultSet.next();
+    statement.execute();
+    ResultSet rs = connection.prepareStatement("SELECT * FROM facultySearches WHERE id = LAST_INSERT_ID()")
+        .executeQuery();
+    if (rs.next()) {
+      System.out.println("A new facultySearch was inserted successfully!");
+    }
 
-    return FacultySearchService.toEntity(resultSet);
+    return FacultySearchService.toEntity(rs);
   }
 
-  public static void assignUserToFacultySearch(Integer userId, Integer facultySearchId) throws SQLException {
+  public static void assignUserToFacultySearch(Integer userId, Integer facultySearchId, String role)
+      throws SQLException {
     // under the system, create member
     // create a member to link user with search
 
     Connection connection = Database.getConnection();
-    String query = "INSERT INTO members (userId, facultySearchId) VALUES (" + userId + ", " + facultySearchId + ")";
+    String query = "INSERT INTO members (userId, facultySearchId, role) VALUES (?, ?, ?)";
+
     PreparedStatement statement = connection.prepareStatement(query);
-    statement.executeQuery();
+    statement.setInt(1, userId);
+    statement.setInt(2, facultySearchId);
+    statement.setString(3, role);
+    statement.execute();
   }
 }

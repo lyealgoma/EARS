@@ -1,18 +1,30 @@
 package Entities;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+
 public class ApplicationEntity {
 
-  private String status;
-
   private Integer id;
+
+  private String status;
 
   private String firstName, lastName, phone, email, address, city, province, position, department, experience1,
       experience2, education1, education2, content;
 
-  private String assignedDate;
-  private String submitDate;
+  private LocalDate assignedDate;
+  private Timestamp submitDate;
   private String assignTo;
   private String facultySearchId;
+  private String applicantName;
+
+  public String getApplicantName() {
+    return applicantName;
+  }
+
+  public void setApplicantName(String applicantName) {
+    this.applicantName = applicantName;
+  }
 
   public Integer getId() {
     return id;
@@ -143,22 +155,22 @@ public class ApplicationEntity {
   }
 
   // Setter for assignedDate
-  public void setAssignedDate(String assignedDate) {
+  public void setAssignedDate(LocalDate assignedDate) {
     this.assignedDate = assignedDate;
   }
 
   // Getter for assignedDate
-  public String getAssignedDate() {
+  public LocalDate getAssignedDate() {
     return assignedDate;
   }
 
   // Setter for submitDate
-  public void setSubmitDate(String submitDate) {
+  public void setSubmitDate(Timestamp submitDate) {
     this.submitDate = submitDate;
   }
 
   // Getter for submitDate
-  public String getSubmitDate() {
+  public Timestamp getSubmitDate() {
     return submitDate;
   }
 

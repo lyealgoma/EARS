@@ -79,24 +79,6 @@ public class AdminDashBoardView extends Application {
     facultySearchBtn.setFont(Font.font(null, FontWeight.BOLD, 20));
     facultySearchBtn.setStyle(
         "-fx-background-color: null; -fx-background-insets: 0; -fx-text-fill: blue; -fx-border-color: transparent;");
-    /*
-     * facultySearchBtn.setOnMouseEntered(e -> {
-     * facultySearchBtn.
-     * setStyle("-fx-background-color: null; -fx-background-insets: 0; -fx-text-fill: blue; -fx-border-color: transparent;"
-     * );
-     * });
-     * 
-     * facultySearchBtn.setOnMouseExited(e -> {
-     * facultySearchBtn.
-     * setStyle("-fx-background-color: null; -fx-background-insets: 0; -fx-text-fill: black; -fx-border-color: transparent;"
-     * );
-     * });
-     * facultySearchBtn.setOnAction(e -> {
-     * facultySearchBtn.
-     * setStyle("-fx-background-color: #FF6347; -fx-text-fill: white;");
-     * });
-     */
-
     facultySearchBtn.setOnAction((ActionEvent e) -> {
       stage.close();
       try {

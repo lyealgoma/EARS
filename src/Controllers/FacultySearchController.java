@@ -1,10 +1,11 @@
 package Controllers;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import Entities.*;
-import Services.*;;
+import Services.*;
 
 public class FacultySearchController {
   // for regular user
@@ -20,13 +21,20 @@ public class FacultySearchController {
     return service.listAllFacultySearch();
   }
 
-  public static FacultySearchEntity createFacultySearch(String title, Date starDate, Date endDate) {
-    FacultySearchEntity facultySearchEntity = null;
-    try {
-      facultySearchEntity = FacultySearchService.createFacultySearch(title, starDate, endDate);
-    } catch (Exception e) {
-      e.printStackTrace();
+  public static void createFacultySearch(FacultySearchEntity fSearchEntity, ArrayList<Integer> memberUserIds,
+      Integer chairId) throws SQLException {
+    fSearchEntity.setStatus("active");
+    FacultySearchEntity newFacultySearch = FacultySearchService.createFacultySearch(fSearchEntity);
+    // create membere
+    for (Integer userId : memberUserIds) {
+      String role = "member";
+      FacultySearchService.assignUserToFacultySearch(userId, newFacultySearch.getId(), role);
     }
-    return facultySearchEntity;
+    String role = "chair";
+    FacultySearchService.assignUserToFacultySearch(chairId, newFacultySearch.getId(), role);
+
+  }
+
+  public static void createFacultySearch(String text, Date valueOf, Date valueOf2) {
   }
 }

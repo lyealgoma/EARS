@@ -63,7 +63,7 @@ public class AdminUserDashBoardView extends Application {
     adminlabel.setLayoutX(50);
     adminlabel.setLayoutY(10);
 
-    userBtn = new Button("Zhengbin,Xue");
+    userBtn = new Button(LoginView.userEntity.getFirstName() + "," + LoginView.userEntity.getLastName());
     userBtn.setFont(Font.font(20));
 
     userBtn.setStyle(

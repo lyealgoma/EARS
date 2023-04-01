@@ -26,7 +26,7 @@ public class FacultySearchService {
     Connection connection = Database.getConnection();
     try {
       ResultSet resultSet = connection.prepareStatement(
-          "SELECT title FROM facultySearches f JOIN members ON facultySearchId = f.id JOIN users ON members.userId = users.id WHERE users.id="
+          "SELECT * FROM facultySearches f JOIN members ON facultySearchId = f.id JOIN users ON members.userId = users.id WHERE users.id="
               + userId)
           .executeQuery();
 

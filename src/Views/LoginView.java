@@ -103,12 +103,14 @@ public class LoginView extends Application {
       if (isAuthenticated == true) {
 
         userEntity = UserService.getUserByEmail(email);
-        UserContext.setUser(userEntity);
+        UserContext userContext = UserContext.getInstance();
+        userContext.setUser(userEntity);
+
         if (userEntity.getRole().equalsIgnoreCase("regular")) {
           new DashboardView().start(new Stage());
         }
 
-        if (userEntity.getRole().equalsIgnoreCase("admin")) {
+        if (userEntity.isAdmin()) {
           try {
 
             new AdminUserDashBoardView().start(new Stage());

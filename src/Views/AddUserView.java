@@ -1,13 +1,21 @@
 package Views;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
+import com.mysql.cj.x.protobuf.MysqlxDatatypes.Array;
+
+import Controllers.AddUserController;
+import Entities.DepartmentEntity;
 import Services.UserService;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -20,14 +28,14 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
-public class Profile extends Application {
+public class AddUserView extends Application {
+	private ObservableList<DepartmentEntity> departmentList = FXCollections.observableArrayList();
 
 	@Override
-	public void start(Stage primaryStage) {
+	public void start(Stage primaryStage) throws ClassNotFoundException, SQLException {
 
 		GridPane pane2 = new GridPane();
-		Label title = new Label("XXX's Profile");
-		title.setText(LoginView.userEntity.getFirstName() + "'s Profile");
+		Label title = new Label("Create A New User");
 		title.setFont(Font.font(null, FontWeight.BOLD, 35));
 		pane2.add(title, 0, 0);
 		GridPane.setHalignment(title, HPos.LEFT);
@@ -51,32 +59,43 @@ public class Profile extends Application {
 		Label label = new Label("First Name");
 		pane.add(label, 1, 5);
 		TextField firstName = new TextField();
-		firstName.setText(LoginView.userEntity.getFirstName());
 		pane.add(firstName, 1, 6);
 
 		Label label1 = new Label("Last Name");
 		pane.add(label1, 2, 5);
 		TextField lastName = new TextField();
-		lastName.setText(LoginView.userEntity.getLastName());
 		pane.add(lastName, 2, 6);
 
 		Label label2 = new Label("Email");
 		pane.add(label2, 1, 10);
 		TextField email = new TextField();
-		email.setText(LoginView.userEntity.getEmail());
 		pane.add(email, 1, 11, 2, 1);
 
 		Label label9 = new Label("Password");
 		pane.add(label9, 1, 19);
 		PasswordField password = new PasswordField();
-		password.setText(LoginView.userEntity.getPassword());
 		pane.add(password, 1, 20);
 
 		Label label10 = new Label("Role");
 		pane.add(label10, 2, 19);
-		TextField role = new TextField();
-		role.setText(LoginView.userEntity.getRole());
-		pane.add(role, 2, 20);
+		ChoiceBox roleBox = new ChoiceBox();
+        ObservableList<String> options = FXCollections.observableArrayList(
+        "Regular",
+        "Admin");
+        roleBox.setItems(options);
+		roleBox.getSelectionModel().selectFirst();
+		pane.add(roleBox, 2, 20);
+
+		Label label11 = new Label("Department");
+		pane.add(label11,2,28);
+		ChoiceBox<DepartmentEntity> departmentIDBox = new ChoiceBox();
+		departmentList = FXCollections.observableList(AddUserController.getDepartmentList());
+        departmentIDBox.setItems(departmentList);
+		departmentIDBox.getSelectionModel().selectFirst();
+
+		pane.add(departmentIDBox, 2, 29);
+
+
 
 		Button save = new Button("   Save   ");
 		save.setFont(Font.font(17));
@@ -90,32 +109,21 @@ public class Profile extends Application {
 
 		// action
 		save.setOnAction(e -> {
-
-			String firstname = firstName.getText();
-			String lastname = lastName.getText();
-			String Pass = password.getText();
-			String Role = role.getText();
-			String Email = email.getText();
-
-			UserService.setUserByEmail(Email, firstname, lastname, Pass, Role);
-			UserContext userContext = UserContext.getInstance();
+            if(firstName.getText()==""||lastName.getText()==""||email.getText()==""||password.getText()==""){
+                System.out.println("Failed!");
+            }else{
+                AddUserController.addUserToMysql(firstName.getText(),lastName.getText(),email.getText(),password.getText(),(String) roleBox.getValue(), departmentIDBox.getValue().getId());
+            }
+            primaryStage.close();
 			try {
-				if (userContext.getUser().isAdmin()) {
-					new AdminUserDashBoardView().start(new Stage());
-				} else {
-					new DashboardView().start(new Stage());
-				}
-
+				new AdminUserDashBoardView().start(new Stage());
 			} catch (ClassNotFoundException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-			} finally {
-				primaryStage.close();
 			}
-
 		});
 
 		Scene scene = new Scene(pane2, 1280, 720);

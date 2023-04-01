@@ -240,7 +240,7 @@ public class CreateFacultySearchView extends Application {
       } catch (Exception e2) {
         e2.printStackTrace();
       }
-      ps.close();
+      stage.close();
     });
 
     root.getChildren().add(line);

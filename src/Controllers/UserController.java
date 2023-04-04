@@ -20,6 +20,9 @@ public class UserController {
     // query user by email
     UserEntity userEntity = UserService.getUserByEmail(email);
     // comapre databaseSaved.password === userEnterpassword
+    if(userEntity == null){
+      return false;
+    }
     return userEntity.comparePassword(password);
     
   }

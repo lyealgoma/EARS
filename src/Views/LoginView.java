@@ -15,7 +15,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -126,6 +129,22 @@ public class LoginView extends Application {
       }
 
       if (isAuthenticated == false) {
+        Stage commentStage = new Stage();
+        StackPane pane10 = new StackPane();
+        pane10.setPadding(new Insets(15, 25, 15, 25));
+
+        Label label10 = new Label("username/password incorrect");
+        label10.setFont(Font.font("Arial", FontWeight.BOLD, 15));
+        pane10.getChildren().add(label10);
+        StackPane.setAlignment(label10,Pos.CENTER);
+        
+        
+        Scene secondScene = new Scene(pane10,300,300);
+        commentStage.setScene(secondScene);
+        commentStage.show();
+
+
+
         System.out.println("username/password incorrect");
       }
     });

@@ -35,7 +35,7 @@ public class ListApplicationService {
     try {
       sql = "select id,CONCAT(JSON_UNQUOTE(json_extract(applicantProfile,'$.firstName')),' ',JSON_UNQUOTE(json_extract(applicantProfile,'$.lastName'))) as applicantName, submitDate,status from applications where facultySearchId = "
           + facultySearchId;
-      ResultSet resultSet = Database.getConnection().createStatement().executeQuery(sql);
+      ResultSet resultSet = connection.createStatement().executeQuery(sql);
 
       // in programming, iterator => mem pointer
 

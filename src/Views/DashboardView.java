@@ -33,6 +33,11 @@ public class DashboardView extends Application {
   @Override
   public void start(Stage primaryStage) {
     UserContext userContext = UserContext.getInstance();
+    // have a service function call to get user whenever we start this class
+    UserEntity latestUser = UserController.getUserById(userContext.getUser().getID());
+
+    UserContext.getInstance().setUser(latestUser);
+    // set latest user
 
     ArrayList<FacultySearchEntity> facultySearchesAssignedToUsers = facultySearchController
         .listUserAllFacultySearch(userContext.getUser().getID());
@@ -50,7 +55,7 @@ public class DashboardView extends Application {
     label1.setFont(Font.font(40));
 
     Label label2 = new Label("");
-    label2.setText("user: " + LoginView.userEntity.getEmail());
+    label2.setText("user: " + userContext.getUser().getEmail());
     label2.setFont(Font.font(20));
 
     vBox.getChildren().addAll(label1, label2);
@@ -59,7 +64,8 @@ public class DashboardView extends Application {
     BorderPane.setAlignment(vBox, Pos.CENTER);
 
     Label label = new Label("");
-    label.setText(LoginView.userEntity.getFirstName() + "," + LoginView.userEntity.getLastName() + " ");
+    label.setText(UserContext.getInstance().getUser().getFirstName() + ","
+        + UserContext.getInstance().getUser().getLastName() + " ");
 
     label.setFont(Font.font(20));
     label.setLayoutX(1050);
@@ -68,6 +74,7 @@ public class DashboardView extends Application {
     // action
     label.setOnMouseClicked(e -> {
       new Profile().start(new Stage());
+      primaryStage.close();
     });
 
     Image camera = new Image("https://cdn-icons-png.flaticon.com/512/3566/3566345.png");
